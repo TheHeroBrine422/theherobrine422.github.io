@@ -15,8 +15,16 @@
     <p class="ranking5p">Ranking Needed to be in the top 5%:</p>
     <p class="ranking1p">Ranking Needed to be in the top 1%:</p>
     <script>
+      function Get(yourUrl) { // credit https://stackoverflow.com/a/22790025/5038158
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET",yourUrl,false);
+        Httpreq.send(null);
+        return Httpreq.responseText;
+      }
+
       function update() {
-        alert("button works");  
+        var leaderboard = JSON.parse(Get("https://api.thetheoristgateway.com/args/265048a8-8521-4e9c-84c7-1de081efe0a4/leaderboard?page=1"));
+        console.log(leaderboard.total);
       }
     </script>
   </body>
