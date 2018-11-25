@@ -1,1 +1,1 @@
-Header set Access-Control-Allow-Origin "https://theherobrine422.github.io/"
+Header set Access-Control-Allow-Origin "*"
