@@ -3,17 +3,17 @@
   <body>
   <h1>Game Theory Leaderboard API Info</h1>
   <button type="button" onclick="update()">Update Info</button>
-    <p class="particpants">Total Particpants: </p>
-    <p class="key5particpants">Particpants with 5 keys:</p>
-    <p class="key4particpants">Particpants with 4 keys or more:</p>
-    <p class="key4particpants">Particpants with 3 keys or more:</p>
-    <p class="key2particpants">Particpants with 2 keys or more:</p>
-    <p class="key1particpants">Particpants with 1 key or more:</p>
-    <p class="ranking50p">Ranking Needed to be in the top 50%:</p>
-    <p class="ranking25p">Ranking Needed to be in the top 25%:</p>
-    <p class="ranking10p">Ranking Needed to be in the top 10%:</p>
-    <p class="ranking5p">Ranking Needed to be in the top 5%:</p>
-    <p class="ranking1p">Ranking Needed to be in the top 1%:</p>
+    <p id="participants">Total participants: </p>
+    <p id="key5participants">participants with 5 keys:</p>
+    <p id="key4participants">participants with 4 keys or more:</p>
+    <p id="key4participants">participants with 3 keys or more:</p>
+    <p id="key2participants">participants with 2 keys or more:</p>
+    <p id="key1participants">participants with 1 key or more:</p>
+    <p id="ranking50p">Ranking Needed to be in the top 50%:</p>
+    <p id="ranking25p">Ranking Needed to be in the top 25%:</p>
+    <p id="ranking10p">Ranking Needed to be in the top 10%:</p>
+    <p id="ranking5p">Ranking Needed to be in the top 5%:</p>
+    <p id="ranking1p">Ranking Needed to be in the top 1%:</p>
     <script>
       function Get(yourUrl) { // credit https://stackoverflow.com/a/22790025/5038158
         var Httpreq = new XMLHttpRequest(); // a new request
@@ -24,6 +24,7 @@
 
       function update() {
         var leaderboard = JSON.parse(Get("https://api.thetheoristgateway.com/args/265048a8-8521-4e9c-84c7-1de081efe0a4/leaderboard?page=1"));
+        document.getElementById("p1").innerHTML = "Total participants: " + leaderboard.total;
         console.log(leaderboard.total);
       }
     </script>
