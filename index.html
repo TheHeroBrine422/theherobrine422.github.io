@@ -3,12 +3,12 @@
   <body>
   <h1>Game Theory Leaderboard API Info</h1>
   <button type="button" onclick="update()">Update Info</button>
-    <p id="participants">Total participants: </p>
-    <p id="key5participants">participants with 5 keys:</p>
-    <p id="key4participants">participants with 4 keys or more:</p>
-    <p id="key3participants">participants with 3 keys or more:</p>
-    <p id="key2participants">participants with 2 keys or more:</p>
-    <p id="key1participants">participants with 1 key or more:</p>
+    <p id="participants">Total participants:</p>
+    <p id="key5participants">Participants with 5 keys:</p>
+    <p id="key4participants">Participants with 4 keys or more:</p>
+    <p id="key3participants">Participants with 3 keys or more:</p>
+    <p id="key2participants">Participants with 2 keys or more:</p>
+    <p id="key1participants">Participants with 1 key or more:</p>
     <p id="ranking50p">Ranking Needed to be in the top 50%:</p>
     <p id="ranking25p">Ranking Needed to be in the top 25%:</p>
     <p id="ranking10p">Ranking Needed to be in the top 10%:</p>
@@ -24,17 +24,17 @@
 
       function update() {
        data = JSON.parse(Get("https://theherobrine422.github.io/nodejsUpdateLeaderboardJSON/readableData.json"));
-       document.getElementById("participants").innerHTML = document.getElementById("participants").innerHTML + " " + data.participants;
-       document.getElementById("key5participants").innerHTML = document.getElementById("key5participants").innerHTML + " " + data.key5participants;
-       document.getElementById("key4participants").innerHTML = document.getElementById("key4participants").innerHTML + " " + data.key4participants;
-       document.getElementById("key3participants").innerHTML = document.getElementById("key3participants").innerHTML + " " + data.key3participants;
-       document.getElementById("key2participants").innerHTML = document.getElementById("key2participants").innerHTML + " " + data.key2participants;
-       document.getElementById("key1participants").innerHTML = document.getElementById("key1participants").innerHTML + " " + data.key1participants;
-       document.getElementById("ranking50p").innerHTML = document.getElementById("ranking50p").innerHTML + " " + data.ranking50p;
-       document.getElementById("ranking25p").innerHTML = document.getElementById("ranking25p").innerHTML + " " + data.ranking25p;
-       document.getElementById("ranking10p").innerHTML = document.getElementById("ranking10p").innerHTML + " " + data.ranking10p;
-       document.getElementById("ranking5p").innerHTML = document.getElementById("ranking5p").innerHTML + " " + data.ranking5p;
-       document.getElementById("ranking1p").innerHTML = document.getElementById("ranking1p").innerHTML + " " + data.ranking1p;
+       document.getElementById("participants").innerHTML = "Total participants: " + data.participants;
+       document.getElementById("key5participants").innerHTML = "Participants with 5 keys: " + data.key5participants;
+       document.getElementById("key4participants").innerHTML = "Participants with 4 keys or more: " + data.key4participants;
+       document.getElementById("key3participants").innerHTML = "Participants with 3 keys or more: " + data.key3participants;
+       document.getElementById("key2participants").innerHTML = "Participants with 2 keys or more: " + data.key2participants;
+       document.getElementById("key1participants").innerHTML = "Participants with 1 keys or more: " + data.key1participants;
+       document.getElementById("ranking50p").innerHTML = "Ranking Needed to be in the top 50%: " + data.ranking50p;
+       document.getElementById("ranking25p").innerHTML = "Ranking Needed to be in the top 25%: " + data.ranking25p;
+       document.getElementById("ranking10p").innerHTML = "Ranking Needed to be in the top 10%: " + data.ranking10p;
+       document.getElementById("ranking5p").innerHTML = "Ranking Needed to be in the top 5%: " + data.ranking5p;
+       document.getElementById("ranking1p").innerHTML = "Ranking Needed to be in the top 1%: " + data.ranking1p;
       }
     </script>
   </body>
