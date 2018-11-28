@@ -1,11 +1,8 @@
 #!/bin/sh
-COUNTER=0
-TOTAL=$(cat leaderboard.json | underscore select '.total' | grep -o "[0-9]")
-while [ $COUNTER > $TOTAL ]
+COUNTER=130
+while [ true ]
 do
-  node update.js $COUNTER
+  node updateLeaderboard.js $COUNTER
   COUNTER=$(($COUNTER+1))
   echo $COUNTER
 done
-
-echo $TOTAL
