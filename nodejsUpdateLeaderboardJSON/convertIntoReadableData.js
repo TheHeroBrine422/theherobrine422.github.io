@@ -22,3 +22,5 @@ readableData.ranking5p = (total/20).toFixed(0)
 readableData.ranking1p = (total/100).toFixed(0)
 
 console.log(readableData);
+readableData = JSON.stringify(readableData);
+fs.writeFileSync("readableData.json", readableData);
