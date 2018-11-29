@@ -30,15 +30,9 @@ Request("https://api.thetheoristgateway.com/args/265048a8-8521-4e9c-84c7-1de081e
       i2++;
     }
 
-    //console.log(results); // logging
-    //console.log(x);
-    //console.log(total);
-
-    currentLeaderboardJSON.total = total
-    currentLeaderboardJSON.results = results // remake leaderboard.JSON
+    currentLeaderboardJSON.total = total // remake leaderboard.JSON
+    currentLeaderboardJSON.results = results
     currentLeaderboardJSON = JSON.stringify(currentLeaderboardJSON);
-//    console.log("write" + currentLeaderboardJSON);
-    console.log(results.length); // debug
     fs.writeFileSync("leaderboard.json", currentLeaderboardJSON);
 
     if (currentLeaderboardJSON == undefined) { // if this api page doesnt work, take the last number in array and put it for all of them.
