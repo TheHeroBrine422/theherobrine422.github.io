@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Phase 10 Online Score Card</h1>
-    <p>Select the number of players before you start (It will mess up the score card if you change it in the middle of a game), and make sure not to reload the page while in the middle of a game or else you will lose all of the score/phase data.</p>
+    <p>Select the number of players before you start (It will mess up the score card if you change it in the middle of a game), and make sure not to reload the page while in the middle of a game or else you will lose all of the score/phase data. Only put numbers into add slots or else it will break as well.</p>
     <button type="button" onclick="addPlayer()">Add Player</button>
     <button type="button" onclick="removePlayer()">Remove Player</button>
     <button type="button" onclick="updateScore()">Update Scores (this will also set you to the next round)</button>
@@ -69,7 +69,7 @@
           iadd = i + 1
 
           scoreAdd = document.getElementById("ScoreP"+iadd).innerHTML
-          test = players.data[i][1] + scoreAdd
+/*          test = players.data[i][1] + scoreAdd // this part of the code is broken and i have no clue what is breaking it
 
           number = true
           for (var i2 = 0; i2 < test.length; i2++) {
@@ -89,7 +89,7 @@
           } else {
             document.getElementById("err").innerHTML = "Error: Score to add is not a number"
             return
-          }
+          } */
 
           document.getElementById("ScoreP"+iadd).innerHTML = ""
           document.getElementById("r"+round+"p"+iadd+"score").innerHTML = players.data[i][1]
