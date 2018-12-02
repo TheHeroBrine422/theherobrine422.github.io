@@ -12,7 +12,7 @@
     <button type="button" onclick="addPlayer()">Add Player</button>
     <button type="button" onclick="removePlayer()">Remove Player</button>
     <button type="button" onclick="updateScore()">Update Scores (this will also set you to the next round)</button>
-    <p id="round">Current round:</p>
+    <p id="round">Current round: 1</p>
     <p id="err"></p>
     <table>
       <tbody id="scorecard">
@@ -62,7 +62,7 @@
       String.prototype.isNumber = function(){return /^\d+$/.test(this);} // credit https://stackoverflow.com/a/1780055/5038158
 
       function addPhase(player) {
-        players.data[player] = [players.data[player][0]+1, players.data[player][1]]
+        players.data[player][0] = players.data[player][0] + 1
       }
 
       function updateScore() {
@@ -122,15 +122,15 @@
             document.getElementById("err").innerHTML = ""
           }
           playercount2 = players.count + 2
-            document.getElementById("p" + playercount2 + "name").remove()
-            document.getElementById("p" + playercount2 + "score").remove()
-            document.getElementById("p" + playercount2 + "phase").remove()
-            document.getElementById("ScoreP" + playercount2).remove()
-            document.getElementById("ButtonP" + playercount2).remove()
-            document.getElementById("r1p" + playercount2 + "score").remove()
-            document.getElementById("r1p" + playercount2 + "phase").remove()
-            document.getElementById("r2p" + playercount2 + "score").remove()
-            document.getElementById("r2p" + playercount2 + "phase").remove()
+          document.getElementById("p" + playercount2 + "name").remove()
+          document.getElementById("p" + playercount2 + "score").remove()
+          document.getElementById("p" + playercount2 + "phase").remove()
+          document.getElementById("ScoreP" + playercount2).remove()
+          document.getElementById("ButtonP" + playercount2).remove()
+          document.getElementById("r1p" + playercount2 + "score").remove()
+          document.getElementById("r1p" + playercount2 + "phase").remove()
+          document.getElementById("r2p" + playercount2 + "score").remove()
+          document.getElementById("r2p" + playercount2 + "phase").remove()
         } else {
           document.getElementById("err").innerHTML = "Error: Number of players can not be lower then 2"
         }
