@@ -1,0 +1,168 @@
+<html>
+  <head>
+    <title>Phase 10 Online Score Card</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+    </style>
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  </head>
+  <body>
+    <h1>Phase 10 Online Score Card</h1>
+    <p>Select the number of players before you start (It will mess up the score card if you change it in the middle of a game), and make sure not to reload the page while in the middle of a game or else you will lose all of the score/phase data.</p>
+    <table>
+      <tbody id="dealer">
+        <tr>
+          <th>Dealer Order</th>
+        </tr>
+        <tr>
+          <td><div id="1dealer" contenteditable></div></td>
+        </tr>  
+        <tr>
+          <td><div id="2dealer" contenteditable></div></td>
+        </tr>
+      </tbody>  
+    </table>
+    <p></p>
+    <button type="button" onclick="addPlayer()">Add Player</button>
+    <button type="button" onclick="removePlayer()">Remove Player</button>
+    <button type="button" onclick="updateScore()">Update Scores (this will also set you to the next round)</button>
+    <button type="button" onclick="updateDealerOrder">Update Dealer Order</button>
+    <p id="round">Current round: 1</p>
+    <p id="err"></p>
+    <table>
+      <tbody id="scorecard">
+        <tr id="playernames">
+          <th>Round</th>
+          <th>Dealer</th>
+          <th colspan="2"><div contenteditable id="p1name">Player 1</div></th>
+          <th colspan="2"><div contenteditable id="p2name">Player 2</div></th>
+        </tr>
+        <tr id="titles">
+          <td></td>
+          <td></td>
+          <td id="p1score">Score</td>
+          <td id="p1phase">Completed Phase</td>
+          <td id="p2score">Score</td>
+          <td id="p2phase">Completed Phase</td>
+        </tr>
+        <tr id="add">
+          <td>Add</td>
+          <td></td>
+          <td id="ScoreP1"><div contenteditable id="ScoreP1inside"></div></td>
+          <td id="ButtonP1"><button type="button" onclick="addPhase(0)">Add 1 Phase</button></td>
+          <td id="ScoreP2"><div contenteditable id="ScoreP2inside"></div></td>
+          <td id="ButtonP2"><button type="button" onclick="addPhase(1)">Add 1 Phase</button></td>
+        </tr>
+        <tr id="round1">
+          <td>1</td>
+          <td id="r1dealer"></td>
+          <td id="r1p1score"></td>
+          <td id="r1p1phase"></td>
+          <td id="r1p2score"></td>
+          <td id="r1p2phase"></td>
+        </tr>
+        <tr id="round2">
+          <td>2</td>
+          <td id="r2dealer"></td>
+          <td id="r2p1score"></td>
+          <td id="r2p1phase"></td>
+          <td id="r2p2score"></td>
+          <td id="r2p2phase"></td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      var round = 1
+      var players = {"count":1, "data":[[0, 0, "Player 1"], [0, 0, "Player 2"]]} // player array = [phase, score]
+
+      Element.prototype.remove = function() { // credit https://stackoverflow.com/questions/3387427/remove-element-by-id#18120786
+        this.parentElement.removeChild(this);
+      }
+
+      String.prototype.isNumber = function(){return /^\d+$/.test(this);} // credit https://stackoverflow.com/a/1780055/5038158
+
+      function addPhase(player) {
+        players.data[player][0] = players.data[player][0] + 1
+      }
+
+      function updateScore() {
+        for (var i = 0; i <= players.count; i++) {
+          iadd = i + 1
+
+          scoreAdd = document.getElementById("ScoreP"+iadd+"inside").innerHTML
+          test = Number(players.data[i][1]) + Number(scoreAdd)
+          
+          players.data[i][2] =  document.getElementById("p" + iadd + "name").innerHTML // update player name
+
+          if (String(test).isNumber()) {
+            players.data[i][1] = Number(players.data[i][1]) + Number(scoreAdd)
+            document.getElementById("err").innerHTML = ""
+          } else {
+            document.getElementById("err").innerHTML = "Error: Score to add is not a number"
+            return
+          }
+
+          document.getElementById("ScoreP"+iadd+"inside").innerHTML = ""
+          document.getElementById("r"+round+"p"+iadd+"score").innerHTML = players.data[i][1]
+          document.getElementById("r"+round+"p"+iadd+"phase").innerHTML = players.data[i][0]
+        }
+        round = round + 1
+        if (round > 1) {
+          document.getElementById("scorecard").innerHTML = document.getElementById("scorecard").innerHTML + '<tr id="round'+ String(Number(round+1)) + '">'
+          document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td>' + String(Number(round+1)) + '</td>'
+          document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td type="r' + String(Number(round+1)) + 'dealer">' +/* set this cooment equal to the current dealer */+ '</td>'
+          <td id="r1dealer"></td>
+          for (var i = 0; i <= players.count; i++) {
+            iadd = i + 1
+            <td id="r1dealer"></td>
+            document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td id="r' + String(Number(round+1)) + 'p' + iadd + 'score"></td>'
+            document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td id="r' + String(Number(round+1)) + 'p' + iadd + 'phase"></td>'
+          }
+        }
+        document.getElementById("round").innerHTML = "Current round: " + round
+      }
+
+      function addPlayer() {
+        if (players.count > 4) {
+          document.getElementById("err").innerHTML = "Warning: Phase 10 does not normally allow for more then 6 people, you may need to combine multiple decks together or some kind of special house rules for this many players."
+        }
+        players.count = players.count + 1
+        players.data[players.count] = [0,0]
+        playercount1 = players.count + 1
+        document.getElementById("playernames").innerHTML = document.getElementById("playernames").innerHTML + '<th colspan="2"><div contenteditable id="p' + playercount1 + 'name">Player ' + playercount1 + '</div></th>'
+        document.getElementById("titles").innerHTML = document.getElementById("titles").innerHTML + '<td id="p' + playercount1 + 'score">Score</td>'
+        document.getElementById("titles").innerHTML = document.getElementById("titles").innerHTML + '<td id="p' + playercount1 + 'phase">Completed Phase</td>'
+        document.getElementById("add").innerHTML = document.getElementById("add").innerHTML + '<td id="ScoreP' + playercount1 + '"><div contenteditable id="ScoreP' + playercount1 + 'inside"></div></td>'
+        document.getElementById("add").innerHTML = document.getElementById("add").innerHTML + '<td id="ButtonP' + playercount1 + '"><button type="button" onclick="addPhase(' + players.count + ')">Add 1 Phase</button></td>'
+        document.getElementById("round1").innerHTML = document.getElementById("round1").innerHTML + '<td id="r1p' + playercount1 + 'score"></td>'
+        document.getElementById("round1").innerHTML = document.getElementById("round1").innerHTML + '<td id="r1p' + playercount1 + 'phase"></td>'
+        document.getElementById("round2").innerHTML = document.getElementById("round2").innerHTML + '<td id="r2p' + playercount1 + 'score"></td>'
+        document.getElementById("round2").innerHTML = document.getElementById("round2").innerHTML + '<td id="r2p' + playercount1 + 'phase"></td>'
+        document.getElementByID("dealer").innerHTML = 
+      }
+
+      function removePlayer() {
+        if (players.count > 1) {
+          players.count = players.count - 1
+          if (players.count < 6) {
+            document.getElementById("err").innerHTML = ""
+          }
+          playercount2 = players.count + 2
+          document.getElementById("p" + playercount2 + "name").remove()
+          document.getElementById("p" + playercount2 + "score").remove()
+          document.getElementById("p" + playercount2 + "phase").remove()
+          document.getElementById("ScoreP" + playercount2).remove()
+          document.getElementById("ButtonP" + playercount2).remove()
+          document.getElementById("r1p" + playercount2 + "score").remove()
+          document.getElementById("r1p" + playercount2 + "phase").remove()
+          document.getElementById("r2p" + playercount2 + "score").remove()
+          document.getElementById("r2p" + playercount2 + "phase").remove()
+        } else {
+          document.getElementById("err").innerHTML = "Error: Number of players can not be lower then 2"
+        }
+      }
+    </script>
+  </body>
+</html>
