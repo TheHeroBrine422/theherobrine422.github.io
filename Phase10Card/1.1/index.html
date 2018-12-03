@@ -11,24 +11,25 @@
   <body>
     <h1>Phase 10 Online Score Card</h1>
     <p>Select the number of players before you start (It will mess up the score card if you change it in the middle of a game), and make sure not to reload the page while in the middle of a game or else you will lose all of the score/phase data.</p>
+    <p>To use the Dealer Teller, simply set the names of the players in where it says "Player 1" and "Player 2". Then in the dealer order box from top to bottom put the order of dealers at your table according to what the player numbers originally were.</p>
     <table>
       <tbody id="dealer">
         <tr>
           <th>Dealer Order</th>
         </tr>
-        <tr>
+        <tr id="1dealerrow">
           <td><div id="1dealer" contenteditable></div></td>
-        </tr>  
-        <tr>
+        </tr>
+        <tr id="2dealerrow">
           <td><div id="2dealer" contenteditable></div></td>
         </tr>
-      </tbody>  
+      </tbody>
     </table>
     <p></p>
     <button type="button" onclick="addPlayer()">Add Player</button>
     <button type="button" onclick="removePlayer()">Remove Player</button>
     <button type="button" onclick="updateScore()">Update Scores (this will also set you to the next round)</button>
-    <button type="button" onclick="updateDealerOrder">Update Dealer Order</button>
+    <button type="button" onclick="updateDealerOrder()">Update Dealer Order</button>
     <p id="round">Current round: 1</p>
     <p id="err"></p>
     <table>
@@ -36,8 +37,8 @@
         <tr id="playernames">
           <th>Round</th>
           <th>Dealer</th>
-          <th colspan="2"><div contenteditable id="p1name">Player 1</div></th>
-          <th colspan="2"><div contenteditable id="p2name">Player 2</div></th>
+          <th colspan="2" id="p1nameouter"><div contenteditable id="p1name">Player 1</div></th>
+          <th colspan="2" id="p2nameouter"><div contenteditable id="p2name">Player 2</div></th>
         </tr>
         <tr id="titles">
           <td></td>
@@ -91,9 +92,10 @@
         for (var i = 0; i <= players.count; i++) {
           iadd = i + 1
 
+
           scoreAdd = document.getElementById("ScoreP"+iadd+"inside").innerHTML
           test = Number(players.data[i][1]) + Number(scoreAdd)
-          
+
           players.data[i][2] =  document.getElementById("p" + iadd + "name").innerHTML // update player name
 
           if (String(test).isNumber()) {
@@ -107,16 +109,17 @@
           document.getElementById("ScoreP"+iadd+"inside").innerHTML = ""
           document.getElementById("r"+round+"p"+iadd+"score").innerHTML = players.data[i][1]
           document.getElementById("r"+round+"p"+iadd+"phase").innerHTML = players.data[i][0]
+          console.log(((((round+players.count)%(players.count+1))+1)))
+          document.getElementById("r"+round+"dealer").innerHTML = document.getElementById(((((round+players.count)%(players.count+1))+1))+"dealer").innerHTML
+          document.getElementById("r"+(round+1)+"dealer").innerHTML = document.getElementById((((((round+1)+players.count)%(players.count+1))+1))+"dealer").innerHTML
         }
         round = round + 1
         if (round > 1) {
           document.getElementById("scorecard").innerHTML = document.getElementById("scorecard").innerHTML + '<tr id="round'+ String(Number(round+1)) + '">'
           document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td>' + String(Number(round+1)) + '</td>'
-          document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td type="r' + String(Number(round+1)) + 'dealer">' +/* set this cooment equal to the current dealer */+ '</td>'
-          <td id="r1dealer"></td>
+          document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td id="r' + String(Number(round+1)) + 'dealer"></td>'
           for (var i = 0; i <= players.count; i++) {
             iadd = i + 1
-            <td id="r1dealer"></td>
             document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td id="r' + String(Number(round+1)) + 'p' + iadd + 'score"></td>'
             document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td id="r' + String(Number(round+1)) + 'p' + iadd + 'phase"></td>'
           }
@@ -131,7 +134,7 @@
         players.count = players.count + 1
         players.data[players.count] = [0,0]
         playercount1 = players.count + 1
-        document.getElementById("playernames").innerHTML = document.getElementById("playernames").innerHTML + '<th colspan="2"><div contenteditable id="p' + playercount1 + 'name">Player ' + playercount1 + '</div></th>'
+        document.getElementById("playernames").innerHTML = document.getElementById("playernames").innerHTML + '<th colspan="2" id="p' + playercount1 + 'nameouter"><div contenteditable id="p' + playercount1 + 'name">Player ' + playercount1 + '</div></th>'
         document.getElementById("titles").innerHTML = document.getElementById("titles").innerHTML + '<td id="p' + playercount1 + 'score">Score</td>'
         document.getElementById("titles").innerHTML = document.getElementById("titles").innerHTML + '<td id="p' + playercount1 + 'phase">Completed Phase</td>'
         document.getElementById("add").innerHTML = document.getElementById("add").innerHTML + '<td id="ScoreP' + playercount1 + '"><div contenteditable id="ScoreP' + playercount1 + 'inside"></div></td>'
@@ -140,7 +143,8 @@
         document.getElementById("round1").innerHTML = document.getElementById("round1").innerHTML + '<td id="r1p' + playercount1 + 'phase"></td>'
         document.getElementById("round2").innerHTML = document.getElementById("round2").innerHTML + '<td id="r2p' + playercount1 + 'score"></td>'
         document.getElementById("round2").innerHTML = document.getElementById("round2").innerHTML + '<td id="r2p' + playercount1 + 'phase"></td>'
-        document.getElementByID("dealer").innerHTML = 
+        document.getElementById("dealer").innerHTML = document.getElementById("dealer").innerHTML + '<tr id="' + playercount1 + 'dealerrow">'
+        document.getElementById(playercount1 + "dealerrow").innerHTML = '<td><div id="' + playercount1 + 'dealer" contenteditable></div></td>'
       }
 
       function removePlayer() {
@@ -150,7 +154,7 @@
             document.getElementById("err").innerHTML = ""
           }
           playercount2 = players.count + 2
-          document.getElementById("p" + playercount2 + "name").remove()
+          document.getElementById("p" + playercount2 + "nameouter").remove()
           document.getElementById("p" + playercount2 + "score").remove()
           document.getElementById("p" + playercount2 + "phase").remove()
           document.getElementById("ScoreP" + playercount2).remove()
@@ -159,10 +163,33 @@
           document.getElementById("r1p" + playercount2 + "phase").remove()
           document.getElementById("r2p" + playercount2 + "score").remove()
           document.getElementById("r2p" + playercount2 + "phase").remove()
+          document.getElementById(playercount2 + "dealerrow").remove()
         } else {
           document.getElementById("err").innerHTML = "Error: Number of players can not be lower then 2"
         }
       }
+
+      function getDealer(round) {
+
+      }
+
+      function updateDealerOrder() {
+        dealer = []
+        for (var i = 0; i <= players.count; i++) {
+          iadd = i + 1
+          players.data[i][2] =  document.getElementById("p" + iadd + "name").innerHTML
+        }
+        for (var i = 0; i <= players.count; i++) {
+        iadd = i+1
+          if (document.getElementById(iadd + "dealer").innerHTML != "") {
+            dealer[i] = document.getElementById(iadd + "dealer").innerHTML
+            document.getElementById(iadd + "dealer").innerHTML = players.data[document.getElementById(iadd + "dealer").innerHTML-1][2]
+          } else {
+            document.getElementById("err").innerHTML = "Error: a value in the Dealer Order is not filled"
+          }
+        }
+      }
+
     </script>
   </body>
 </html>
