@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>Phase 10 Online Score Card</h1>
-    <p>Select the number of players before you start (It will mess up the score card if you change it in the middle of a game), and make sure not to reload the page while in the middle of a game or else you will lose all of the score/phase data.</p>
+    <p>Select the number of players before you start, you cant change the number after you start it, and make sure not to reload the page while in the middle of a game or else you will lose all of the score/phase data.</p>
     <p>To use the Dealer Teller, simply set the names of the players in where it says "Player 1" and "Player 2". Then in the dealer order box from top to bottom put the order of dealers at your table according to what the player numbers originally were.</p>
     <table>
       <tbody id="dealer">
@@ -26,8 +26,8 @@
       </tbody>
     </table>
     <p></p>
-    <button type="button" onclick="addPlayer()">Add Player</button>
-    <button type="button" onclick="removePlayer()">Remove Player</button>
+    <button type="button" onclick="addPlayer()" id="addplayerbutton">Add Player</button>
+    <button type="button" onclick="removePlayer()" id="removeplayerbutton">Remove Player</button>
     <button type="button" onclick="updateScore()">Update Scores (this will also set you to the next round)</button>
     <button type="button" onclick="updateDealerOrder()">Update Dealer Order</button>
     <p id="round">Current round: 1</p>
@@ -78,6 +78,7 @@
       var round = 1
       var players = {"count":1, "data":[[0, 0, "Player 1"], [0, 0, "Player 2"]]} // player array = [phase (number), score (number), name (string)]
       var dealers = false
+      var buttons = true
 
       Element.prototype.remove = function() { // credit https://stackoverflow.com/questions/3387427/remove-element-by-id#18120786
         this.parentElement.removeChild(this);
@@ -90,6 +91,12 @@
       }
 
       function updateScore() {
+        if (buttons) {
+          document.getElementById("addplayerbutton").remove()
+          document.getElementById("removeplayerbutton").remove()
+          buttons = false
+        }
+
         for (var i = 0; i <= players.count; i++) { // start for loop of all of the players
           iadd = i + 1
 
@@ -202,7 +209,6 @@
           }
         }
       }
-
     </script>
   </body>
 </html>
