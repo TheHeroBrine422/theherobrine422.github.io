@@ -26,7 +26,7 @@
       }
 
       function update() {
-       data = JSON.parse(Get("https://theherobrine422.github.io/nodejsUpdateLeaderboardJSON/readableData.json"));
+       data = JSON.parse(Get("https://theherobrine422.github.io/GTLiveLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json"));
        document.getElementById("participants").innerHTML = "Total participants: " + data.participants;
        document.getElementById("key5participants").innerHTML = "Participants with 5 keys: " + data.key5participants;
        document.getElementById("key4participants").innerHTML = "Participants with 4 keys or more: " + data.key4participants;
