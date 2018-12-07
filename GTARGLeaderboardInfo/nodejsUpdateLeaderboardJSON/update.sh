@@ -8,7 +8,7 @@ COUNTER=$(($COUNTER/100))
 TOTAL=$(echo $COUNTER | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}')
 COUNTER=$(($COUNTER-1))
 
-#node updateLeaderboard.js $COUNTER # get new total
+node updateLeaderboard.js $COUNTER # get new total
 
 TOTAL=$(cat leaderboard.json | underscore select '.total' | tr '\n' ' ' | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ' | sed 's/ /\n/g') # partical creadit https://stackoverflow.com/questions/17883661/how-to-extract-numbers-from-a-string
 TOTAL=$(($TOTAL/100))
@@ -45,9 +45,11 @@ echo got to convert node
 node convertIntoReadableData.js # convert the data into a readable form for the website
 
 TIME=$(date +"%D %T") # update the data on the webserver (github)
-TIMEWRITE=$(cat readableData.json | underscore extend '{time: '$TIME'}')
+echo $TIME
+TIMEWRITE=$(cat readableData.json | underscore extend "{time: '$TIME'}")
+echo $TIMEWRITE
 echo $TIMEWRITE > readableData.json
 
 git add *
 git commit -m "update data $TIME CST"
-#git push
+git push
