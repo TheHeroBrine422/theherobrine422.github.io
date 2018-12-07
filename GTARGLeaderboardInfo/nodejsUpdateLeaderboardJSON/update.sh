@@ -45,7 +45,7 @@ echo got to convert node
 node convertIntoReadableData.js # convert the data into a readable form for the website
 
 TIME=$(date +"%D %T") # update the data on the webserver (github)
-TIMEWRITE=$(cat readableData.json | underscore extend '{time: "$TIME"}')
+TIMEWRITE=$(cat readableData.json | underscore extend '{time: '$TIME'}')
 echo $TIMEWRITE > readableData.json
 
 git add *
