@@ -41,15 +41,13 @@ COUNTERPRECENT=0 # set for percent bar counter
 #  printf " $TOTAL $(awk "BEGIN { pc=100*${COUNTER}/${TOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")%%"
 #done
 
-echo got to convert node
 node convertIntoReadableData.js # convert the data into a readable form for the website
 
 TIME=$(date +"%D %T") # update the data on the webserver (github)
-echo $TIME
 TIMEWRITE=$(cat readableData.json | underscore extend "{time: '$TIME'}")
-echo $TIMEWRITE
 echo $TIMEWRITE > readableData.json
 
+echo \n pushing to github \n
 git add *
 git commit -m "update data $TIME CST"
 git push
