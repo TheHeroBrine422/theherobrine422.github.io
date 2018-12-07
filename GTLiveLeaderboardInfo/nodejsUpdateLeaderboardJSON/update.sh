@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SIZE=2 # smaller = bigger
+SIZE=1 # smaller = bigger minimum 1
 clear
 
 COUNTER=$(cat readableData.json | underscore select '.key5participants' | tr '\n' ' ' | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ' | sed 's/ /\n/g') # set counter to the first data page it needs to pull (first page that isnt just 5s)
@@ -43,9 +43,10 @@ done
 
 node convertIntoReadableData.js # convert the data into a readable form for the website
 
-TIME=$(date +"%D %T") # update the data on the webserver (github)
-TIMEWRITE=$(cat readableData.json | underscore extend '{time: "$TIME"}')
-echo $TIMEWRITE > readableData.json
+#TIME=$(date +"%D %T") # update the data on the webserver (github)
+#TIMEWRITE=$(cat readableData.json | underscore extend '{time: "$TIME"}')
+#echo $TIMEWRITE > readableData.json
+
 git add *
 git commit -m "update data $TIME CST"
 #git push
