@@ -8,7 +8,7 @@ TOTAL=$(echo $COUNTER | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}')
 COUNTER=$(($COUNTER-1))
 OGCOUNT=$COUNTER
 
-#node updateLeaderboard.js $COUNTER # get new total
+node updateLeaderboard.js $COUNTER # get new total
 
 TOTAL=$(cat leaderboard.json | underscore select '.total' | tr '\n' ' ' | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ' | sed 's/ /\n/g') # partical creadit https://stackoverflow.com/questions/17883661/how-to-extract-numbers-from-a-string
 TOTAL=$(($TOTAL/100))
@@ -19,7 +19,7 @@ COUNTERPRECENT=0 # set for percent bar counter
 STARTTIME=$(date +"%s")
 while [ $COUNTER -lt $TOTAL ]
 do
-  #node updateLeaderboard.js $COUNTER # pull data
+  node updateLeaderboard.js $COUNTER # pull data
   COUNTER=$(($COUNTER+1))
   ACTUALCOUNT=$(($COUNTER-$OGCOUNT))
   ACTUALTOTAL=$(($TOTAL-$OGCOUNT))
