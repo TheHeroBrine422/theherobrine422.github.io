@@ -1,6 +1,5 @@
 #!/bin/sh
 
-SIZE=1 # smaller = bigger minimum 1
 clear
 
 COUNTER=$(cat readableData.json | underscore select '.key5participants' | tr '\n' ' ' | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ' | sed 's/ /\n/g') # set counter to the first data page it needs to pull (first page that isnt just 5s)
@@ -24,26 +23,11 @@ do
   COUNTER=$(($COUNTER+1))
   ACTUALCOUNT=$(($COUNTER-$OGCOUNT))
   ACTUALTOTAL=$(($TOTAL-$OGCOUNT))
-  clear # clear screen (start of percent bar)
   printf "$ACTUALCOUNT /" # print current data page
-#  COUNTERPRECENT=0
-  PERCENT=$(awk "BEGIN { pc=100*${ACTUALCOUNT}/${ACTUALTOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
-  PERCENT=$(($PERCENT/$SIZE))
-#  while [ $COUNTERPRECENT -lt $(echo $PERCENT | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}') ]
-#  do
-#    printf "#"
-#    COUNTERPRECENT=$(($COUNTERPRECENT+1))
-#  done
-#  COUNTERPRECENT=0
-#  while [ $COUNTERPRECENT -lt $(($((100/$SIZE))-$(echo $PERCENT | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}'))) ]
-#  do
-#    printf " "
-#    COUNTERPRECENT=$(($COUNTERPRECENT+1))
-#  done
   PERCENT=$(awk "BEGIN { pc=100*${ACTUALCOUNT}/${ACTUALTOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
   printf " $(($ACTUALTOTAL)) $PERCENT%%       $(($(date +'%s')-$STARTTIME)) seconds out of a estimated "
   node eta.js $ACTUALCOUNT $ACTUALTOTAL $(date +'%s') $STARTTIME
-  printf " seconds"
+  printf " seconds \n"
 done
 
 node convertIntoReadableData.js # convert the data into a readable form for the website
