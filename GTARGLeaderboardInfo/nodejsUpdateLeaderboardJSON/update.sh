@@ -40,15 +40,10 @@ do
     printf " "
     COUNTERPRECENT=$(($COUNTERPRECENT+1))
   done
-  PERCENT=$((100*$ACTUALCOUNT/$ACTUALTOTAL))
-  if [ $PERCENT -eq 0 ]; then
-    PERCENT=1
-  fi
-  ETA=$((100/$PERCENT)) # TOTAL calculation, just forcing pemdas: ($(date +'%s')-$STARTTIME)*(100/$PERCENT)
-  ETAT=$(($(date +'%s')-$STARTTIME)) # ETA 2
-  ETA=$(($ETAT*$ETA))
   PERCENT=$(awk "BEGIN { pc=100*${ACTUALCOUNT}/${ACTUALTOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
-  printf " $(($ACTUALTOTAL)) $PERCENT%%       $(($(date +'%s')-$STARTTIME)) seconds out of a estimated $ETA seconds"
+  printf " $(($ACTUALTOTAL)) $PERCENT%%       $(($(date +'%s')-$STARTTIME)) seconds out of a estimated "
+  node eta.js $ACTUALCOUNT $ACTUALTOTAL $(date +'%s') $STARTTIME
+  printf " seconds"
 done
 
 node convertIntoReadableData.js # convert the data into a readable form for the website
