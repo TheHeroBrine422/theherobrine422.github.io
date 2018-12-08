@@ -7,6 +7,7 @@ COUNTER=$(cat readableData.json | underscore select '.key5participants' | tr '\n
 COUNTER=$(($COUNTER/100))
 TOTAL=$(echo $COUNTER | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}')
 COUNTER=$(($COUNTER-1))
+OGCOUNT=$COUNTER
 
 node updateLeaderboard.js $COUNTER # get new total
 
@@ -16,16 +17,17 @@ TOTAL=$(echo $TOTAL | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}')
 TOTAL=$(($TOTAL+1)) # pull total
 
 COUNTERPRECENT=0 # set for percent bar counter
-
+STARTTIME=$(date +"%s")
 while [ $COUNTER -lt $TOTAL ]
 do
   node updateLeaderboard.js $COUNTER # pull data
   COUNTER=$(($COUNTER+1))
-
+  ACTUALCOUNT=$(($COUNTER-$OGCOUNT))
+  ACTUALTOTAL=$(($TOTAL-$OGCOUNT))
   clear # clear screen (start of percent bar)
-  printf "$COUNTER " # print current data page
+  printf "$ACTUALCOUNT " # print current data page
   COUNTERPRECENT=0
-  PERCENT=$(awk "BEGIN { pc=100*${COUNTER}/${TOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
+  PERCENT=$(awk "BEGIN { pc=100*${ACTUALCOUNT}/${ACTUALTOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
   PERCENT=$(($PERCENT/$SIZE))
   while [ $COUNTERPRECENT -lt $(echo $PERCENT | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}') ]
   do
@@ -38,7 +40,15 @@ do
     printf " "
     COUNTERPRECENT=$(($COUNTERPRECENT+1))
   done
-  printf " $TOTAL $(awk "BEGIN { pc=100*${COUNTER}/${TOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")%%"
+  PERCENT=$((100*$ACTUALCOUNT/$ACTUALTOTAL))
+  if [ $PERCENT -eq 0 ]; then
+    PERCENT=1
+  fi
+  ETA=$((100/$PERCENT)) # TOTAL calculation, just forcing pemdas: ($(date +'%s')-$STARTTIME)*(100/$PERCENT)
+  ETAT=$(($(date +'%s')-$STARTTIME)) # ETA 2
+  ETA=$(($ETAT*$ETA))
+  PERCENT=$(awk "BEGIN { pc=100*${ACTUALCOUNT}/${ACTUALTOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
+  printf " $(($ACTUALTOTAL)) $PERCENT%%       $(($(date +'%s')-$STARTTIME)) seconds out of a estimated $ETA seconds"
 done
 
 node convertIntoReadableData.js # convert the data into a readable form for the website
