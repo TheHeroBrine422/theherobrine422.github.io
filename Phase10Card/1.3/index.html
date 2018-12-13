@@ -1,0 +1,258 @@
+<html>
+  <head>
+    <title>Phase 10 Online Score Card</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+    </style>
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  </head>
+  <body>
+    <h1>Phase 10 Online Score Card</h1>
+    <p>Select the number of players before you start, you cant change the number after you start it. If you reload the page, click the reload button and it will bring back your old data. If it does something weird, where the whole score card disappears or something like that when you hit reload, you have no saved data, refresh the page and well sorry but its gone.</p>
+    <p>To use the Dealer Teller, simply set the names of the players in where it says "Player 1" and "Player 2". Then in the dealer order box from top to bottom put the order of dealers at your table according to what the player numbers originally were.</p>
+    <table>
+      <tbody id="dealer">
+        <tr>
+          <th>Dealer Order</th>
+        </tr>
+        <tr id="1dealerrow">
+          <td><div id="1dealer" contenteditable></div></td>
+        </tr>
+        <tr id="2dealerrow">
+          <td><div id="2dealer" contenteditable></div></td>
+        </tr>
+      </tbody>
+    </table>
+    <p></p>
+    <button type="button" onclick="addPlayer()" id="addplayerbutton">Add Player</button>
+    <button type="button" onclick="removePlayer()" id="removeplayerbutton">Remove Player</button>
+    <button type="button" onclick="updateScore()">Update Scores (this will also set you to the next round)</button>
+    <button type="button" onclick="undoRound()">Undo Round (this will set you back a round)</button>
+    <button type="button" onclick="updateDealerOrder()">Update Dealer Order</button>
+    <button type="button" onclick="reload()">Reload</button>
+    <p id="round">Current round: 1</p>
+    <p id="err"></p>
+    <table>
+      <tbody id="scorecard">
+        <tr id="playernames">
+          <th>Round</th>
+          <th>Dealer</th>
+          <th colspan="2" id="p1nameouter"><div contenteditable id="p1name">Player 1</div></th>
+          <th colspan="2" id="p2nameouter"><div contenteditable id="p2name">Player 2</div></th>
+        </tr>
+        <tr id="titles">
+          <td></td>
+          <td></td>
+          <td id="p1score">Score</td>
+          <td id="p1phase">Completed Phase</td>
+          <td id="p2score">Score</td>
+          <td id="p2phase">Completed Phase</td>
+        </tr>
+        <tr id="add">
+          <td>Add</td>
+          <td></td>
+          <td id="ScoreP1"><div contenteditable id="ScoreP1inside"></div></td>
+          <td id="ButtonP1"><button type="button" onclick="addPhase(0)">Add 1 Phase</button></td>
+          <td id="ScoreP2"><div contenteditable id="ScoreP2inside"></div></td>
+          <td id="ButtonP2"><button type="button" onclick="addPhase(1)">Add 1 Phase</button></td>
+        </tr>
+        <tr id="round1">
+          <td>1</td>
+          <td id="r1dealer"></td>
+          <td id="r1p1score"></td>
+          <td id="r1p1phase"></td>
+          <td id="r1p2score"></td>
+          <td id="r1p2phase"></td>
+        </tr>
+        <tr id="round2">
+          <td>2</td>
+          <td id="r2dealer"></td>
+          <td id="r2p1score"></td>
+          <td id="r2p1phase"></td>
+          <td id="r2p2score"></td>
+          <td id="r2p2phase"></td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      var round = 1
+      var players = {"count":1, "data":[[0, 0, "Player 1"], [0, 0, "Player 2"]]} // player array = [phase (number), score (number), name (string)]
+      var dealers = false
+      var buttons = true
+      var saveData = JSON.parse(localStorage.saveData || null) || {};
+
+      Element.prototype.remove = function() { // credit https://stackoverflow.com/questions/3387427/remove-element-by-id#18120786
+        this.parentElement.removeChild(this);
+      }
+
+      String.prototype.isNumber = function(){return /^\d+$/.test(this);} // credit https://stackoverflow.com/a/1780055/5038158
+
+      function addPhase(player) { // simply add 1 to phase counter for player
+        players.data[player][0] = players.data[player][0] + 1
+      }
+
+      function updateScore() {
+        if (buttons) {
+          document.getElementById("addplayerbutton").remove()
+          document.getElementById("removeplayerbutton").remove()
+          buttons = false
+        }
+
+        for (var i = 0; i <= players.count; i++) { // start for loop of all of the players
+          scoreAdd = document.getElementById("ScoreP"+(i + 1)+"inside").innerHTML // get the score to add
+          test = Number(players.data[i][1]) + Number(scoreAdd) // set that number up for a test
+
+          players.data[i][2] =  document.getElementById("p" + (i + 1) + "name").innerHTML // update player name
+
+          if (String(test).isNumber()) { // test if the number actually is a number
+            players.data[i][1] = Number(players.data[i][1]) + Number(scoreAdd) // set the offical player score to the tested number
+            document.getElementById("err").innerHTML = "" // set err to nothing
+          } else {
+            document.getElementById("err").innerHTML = "Error: Score to add is not a number" // if the number isnt a number givve a err msg
+            document.getElementById("err").style.color = "red"
+            return
+          }
+
+          document.getElementById("ScoreP"+(i + 1)+"inside").innerHTML = "" // reset player's add boxto empty
+          document.getElementById("r"+round+"p"+(i + 1)+"score").innerHTML = players.data[i][1] // set the round box to the player score
+          document.getElementById("r"+round+"p"+(i + 1)+"phase").innerHTML = players.data[i][0]
+        }
+
+        if (dealers == true) { // check if user is using dealer teller or not
+          document.getElementById("r"+round+"dealer").innerHTML = document.getElementById(((((round+players.count)%(players.count+1))+1))+"dealer").innerHTML // current round dealer (really only needed for round 1)
+          document.getElementById("r"+(round+1)+"dealer").innerHTML = document.getElementById((((((round+1)+players.count)%(players.count+1))+1))+"dealer").innerHTML // next round dealer
+        } else {
+          document.getElementById("err").innerHTML = "Warning: Dealer Order not set."
+          document.getElementById("err").style.color = "Orange"
+        }
+
+        round = round + 1 // increment round
+
+        if (round > 1) {  // add the next line/round for adding data later
+          document.getElementById("scorecard").innerHTML = document.getElementById("scorecard").innerHTML + '<tr id="round'+ String(Number(round+1)) + '">'
+          document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td>' + String(Number(round+1)) + '</td>'
+          document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td id="r' + String(Number(round+1)) + 'dealer"></td>'
+          for (var i = 0; i <= players.count; i++) {
+            document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td id="r' + String(Number(round+1)) + 'p' + (i + 1) + 'score"></td>'
+            document.getElementById("round" + String(Number(round+1))).innerHTML = document.getElementById("round" + String(Number(round+1))).innerHTML + '<td id="r' + String(Number(round+1)) + 'p' + (i + 1) + 'phase"></td>'
+          }
+        }
+        document.getElementById("round").innerHTML = "Current round: " + round // set current round
+
+        saveData.scorecard = document.getElementById("scorecard").innerHTML
+        saveData.round = round
+        localStorage.saveData = JSON.stringify(saveData)
+      }
+
+      function undoRound() {
+        if (round <= 1) { // check if they try to go to round 0 or less
+          document.getElementById("err").innerHTML = "Error: Can not make round number less then 1"
+          document.getElementById("err").style.color = "Red"
+        } else { // main code for undoRound()
+          for (var i = 0; i <= players.count; i++) { // start for loop of all of the players
+            players.data[i][2] =  document.getElementById("p" + (i + 1) + "name").innerHTML // update player name
+            if ((round-2) > 0) {
+              if (document.getElementById("r"+(round-2)+"p"+(i + 1)+"phase").innerHTML == "") {
+                players.data[i][0] = 0
+              } else {
+                players.data[i][0] = document.getElementById("r"+(round-2)+"p"+(i + 1)+"phase").innerHTML
+              }
+              players.data[i][1] = document.getElementById("r"+(round-2)+"p"+(i + 1)+"score").innerHTML
+            } else {
+              players.data[i][0] = 0
+              players.data[i][1] = 0
+            }
+            document.getElementById("r"+(round - 1)+"p"+(i + 1)+"score").innerHTML = ""
+            document.getElementById("r"+(round - 1)+"p"+(i + 1)+"phase").innerHTML = ""
+          }
+          document.getElementById("round"+(round + 1)).remove()
+
+          round = round - 1
+
+          document.getElementById("round").innerHTML = "Current round: " + round
+        }
+      }
+
+      function addPlayer() {
+        if (players.count > 4) { // check if theres going to be 7+ players
+          document.getElementById("err").innerHTML = "Warning: Phase 10 does not normally allow for more then 6 people, you may need to combine multiple decks together or some kind of special house rules for this many players." // set a warning
+          document.getElementById("err").style.color = "Orange"
+        }
+        players.count = players.count + 1 // increment player count
+        players.data[players.count] = [0,0] // set data for new player
+
+        document.getElementById("playernames").innerHTML = document.getElementById("playernames").innerHTML + '<th colspan="2" id="p' + (players.count + 1) + 'nameouter"><div contenteditable id="p' + (players.count + 1) + 'name">Player ' + (players.count + 1) + '</div></th>' // add the colums/data for the new player
+        document.getElementById("titles").innerHTML = document.getElementById("titles").innerHTML + '<td id="p' + (players.count + 1) + 'score">Score</td>'
+        document.getElementById("titles").innerHTML = document.getElementById("titles").innerHTML + '<td id="p' + (players.count + 1) + 'phase">Completed Phase</td>'
+        document.getElementById("add").innerHTML = document.getElementById("add").innerHTML + '<td id="ScoreP' + (players.count + 1) + '"><div contenteditable id="ScoreP' + (players.count + 1) + 'inside"></div></td>'
+        document.getElementById("add").innerHTML = document.getElementById("add").innerHTML + '<td id="ButtonP' + (players.count + 1) + '"><button type="button" onclick="addPhase(' + players.count + ')">Add 1 Phase</button></td>'
+        document.getElementById("round1").innerHTML = document.getElementById("round1").innerHTML + '<td id="r1p' + (players.count + 1) + 'score"></td>'
+        document.getElementById("round1").innerHTML = document.getElementById("round1").innerHTML + '<td id="r1p' + (players.count + 1) + 'phase"></td>'
+        document.getElementById("round2").innerHTML = document.getElementById("round2").innerHTML + '<td id="r2p' + (players.count + 1) + 'score"></td>'
+        document.getElementById("round2").innerHTML = document.getElementById("round2").innerHTML + '<td id="r2p' + (players.count + 1) + 'phase"></td>'
+        document.getElementById("dealer").innerHTML = document.getElementById("dealer").innerHTML + '<tr id="' + (players.count + 1) + 'dealerrow">'
+        document.getElementById((players.count + 1) + "dealerrow").innerHTML = '<td><div id="' + (players.count + 1) + 'dealer" contenteditable></div></td>'
+      }
+
+      function removePlayer() {
+        if (players.count > 1) { // check if theres going to be less then 2 players and if so set a err
+          players.count = players.count - 1
+          if (players.count < 6) { // check if there are less then 7 and remove a potenial warning
+            document.getElementById("err").innerHTML = ""
+          }
+          document.getElementById("p" + (players.count + 2) + "nameouter").remove() // remove data/columms for old player
+          document.getElementById("p" + (players.count + 2) + "score").remove()
+          document.getElementById("p" + (players.count + 2) + "phase").remove()
+          document.getElementById("ScoreP" + (players.count + 2)).remove()
+          document.getElementById("ButtonP" + (players.count + 2)).remove()
+          document.getElementById("r1p" + (players.count + 2) + "score").remove()
+          document.getElementById("r1p" + (players.count + 2) + "phase").remove()
+          document.getElementById("r2p" + (players.count + 2) + "score").remove()
+          document.getElementById("r2p" + (players.count + 2) + "phase").remove()
+          document.getElementById((players.count + 2) + "dealerrow").remove()
+        } else {
+          document.getElementById("err").innerHTML = "Error: Number of players can not be lower then 2"
+          document.getElementById("err").style.color = "red"
+        }
+      }
+
+      function updateDealerOrder() {
+        dealers = true
+
+        for (var i = 0; i <= players.count; i++) { // update names for players
+
+          players.data[i][2] =  document.getElementById("p" + (i + 1) + "name").innerHTML
+        }
+
+        for (var i = 0; i <= players.count; i++) { // for loop through the dealer order table
+          if (document.getElementById((i + 1) + "dealer").innerHTML != "") { // check if there is a value in the box
+            document.getElementById((i + 1) + "dealer").innerHTML = players.data[document.getElementById((i + 1) + "dealer").innerHTML-1][2]
+          } else {
+            document.getElementById("err").innerHTML = "Error: a value in the Dealer Order is not filled" // if there is no value, set a err and break out of the loop
+            document.getElementById("err").style.color = "red"
+            dealers = false
+            break
+          }
+        }
+
+        saveData.dealer = document.getElementById("dealer").innerHTML // localStorage save
+        localStorage.saveData = JSON.stringify(saveData)
+      }
+
+      function reload() {
+        var saveData = JSON.parse(localStorage.saveData || null) || {};
+        if (buttons) {
+          document.getElementById("addplayerbutton").remove()
+          document.getElementById("removeplayerbutton").remove()
+          buttons = false
+        }
+        document.getElementById("dealer").innerHTML = saveData.dealer
+        document.getElementById("scorecard").innerHTML = saveData.scorecard
+        round = saveData.round
+      }
+
+    </script>
+  </body>
+</html>
