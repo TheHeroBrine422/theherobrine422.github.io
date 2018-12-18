@@ -9,13 +9,13 @@ COUNTER=$(($COUNTER-1))
 OGCOUNT=$COUNTER
 
 node updateLeaderboard.js $COUNTER # get new total
+node convertIntoReadableData.js
 
-TOTAL=$(cat leaderboard.json | underscore select '.total' | tr '\n' ' ' | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ' | sed 's/ /\n/g') # partical creadit https://stackoverflow.com/questions/17883661/how-to-extract-numbers-from-a-string
+TOTAL=$(cat readableData.json | underscore select '.participants' | tr '\n' ' ' | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ' | sed 's/ /\n/g') # partical creadit https://stackoverflow.com/questions/17883661/how-to-extract-numbers-from-a-string
 TOTAL=$(($TOTAL/100))
 TOTAL=$(echo $TOTAL | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}')
 TOTAL=$(($TOTAL+1)) # pull total
 
-COUNTERPRECENT=0 # set for percent bar counter
 STARTTIME=$(date +"%s")
 while [ $COUNTER -lt $TOTAL ]
 do
@@ -35,8 +35,10 @@ node convertIntoReadableData.js # convert the data into a readable form for the 
 TIME=$(date +"%D %T") # update the data on the webserver (github)
 TIMEWRITE=$(cat readableData.json | underscore extend "{time: '$TIME'}")
 echo $TIMEWRITE > readableData.json
+cat readableData.json
 
 echo pushing to github
-git add *
-git commit -m "update data $TIME CST"
+git add leaderboard.json
+git add readableData.json
+git commit -m "gtarg update data $TIME CST"
 git push
