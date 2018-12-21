@@ -23,11 +23,9 @@ do
   COUNTER=$(($COUNTER+1))
   ACTUALCOUNT=$(($COUNTER-$OGCOUNT))
   ACTUALTOTAL=$(($TOTAL-$OGCOUNT))
-  printf "$ACTUALCOUNT /" # print current data page
   PERCENT=$(awk "BEGIN { pc=100*${ACTUALCOUNT}/${ACTUALTOTAL}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
-  printf " $(($ACTUALTOTAL)) $PERCENT%%       $(($(date +'%s')-$STARTTIME)) seconds out of a estimated "
-  node eta.js $ACTUALCOUNT $ACTUALTOTAL $(date +'%s') $STARTTIME
-  printf " seconds \n"
+  ETA=$(node eta.js $ACTUALCOUNT $ACTUALTOTAL $(date +'%s') $STARTTIME)
+  printf "$ACTUALCOUNT / $ACTUALTOTAL $PERCENT%%       $(($(date +'%s')-$STARTTIME)) seconds out of a estimated $ETA seconds. Remaining Time: $(($ETA-($(date +'%s')-$STARTTIME))) seconds \n"
 done
 
 node convertIntoReadableData.js # convert the data into a readable form for the website
