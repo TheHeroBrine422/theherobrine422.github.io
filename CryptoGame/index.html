@@ -1,0 +1,37 @@
+<html>
+
+<head>
+  <title>Crypto Game</title>
+  <script src="main.js" id="JS"></script>
+  <script src="main.css" id="CSS"></script>
+  <script>
+    Element.prototype.remove = function() { // credit https://stackoverflow.com/questions/3387427/remove-element-by-id#18120786
+      this.parentElement.removeChild(this);
+    }
+
+    function reload() {
+      document.getElementById("JS").remove()
+      document.getElementById("CSS").remove()
+      var JS = document.createElement("script");
+      JS.src = "main.js";
+      JS.id = "JS"
+      var CSS = document.createElement("script");
+      CSS.src = "main.css";
+      CSS.id = "CSS"
+      document.getElementsByTagName("head")[0].appendChild(JS);
+      document.getElementsByTagName("head")[0].appendChild(CSS);
+      return false;
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Crypto Game</h1>
+  <button type="button" onclick="reload()">Reload JS & CSS</button>
+  <button id="MainButton" class="TabButton" type="button" onclick="MainButton()">Main</button>
+  <button id="MainButton" class="TabButton" type="button" onclick="MainButton()">Buy</button>
+  <button id="MainButton" class="TabButton" type="button" onclick="MainButton()">Overclock</button>
+  <button id="MainButton" class="TabButton" type="button" onclick="MainButton()">Exchange</button>
+</body>
+
+</html>

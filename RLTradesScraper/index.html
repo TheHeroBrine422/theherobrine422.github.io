@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>RL-Trades.com Scraper</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+      .box{
+        float:left;
+        margin-right:20px;
+        overflow: hidden;
+        width: 800;
+        height: 10000;
+      }
+      .clear{
+        clear:both;
+      }
+    </style>
+  </head>
+  <body id="body">
+    <button type="button" onclick="scrape()">Scrape</button>
+    <table>
+      <tbody>
+        <tr>
+          <th>Item</th>
+        </tr>
+        <tr>
+          <th><div contenteditable id="item"></div></th>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      Element.prototype.remove = function() { // credit https://stackoverflow.com/questions/3387427/remove-element-by-id#18120786
+        this.parentElement.removeChild(this);
+      }
+
+      function scrape() {
+        //document.getElementById("iframe").remove()
+        //document.getElementById("iframe").remove()
+        document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#w0=%22'+ encodeURIComponent(document.getElementById("item").innerHTML) +'%22" scrolling="no" frameborder="0" width="800" height="10000" align="left" style="position: relative; top: -475px"></iframe> </div>';
+        document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#h0=%22'+ encodeURIComponent(document.getElementById("item").innerHTML) +'%22" scrolling="no" frameborder="0" width="800" height="10000" align="right" style="position: relative; top: -475px"></iframe> </div>';
+      }
+    </script>
+  </body>
+</html>
