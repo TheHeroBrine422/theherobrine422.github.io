@@ -11,7 +11,7 @@
         margin-right:20px;
         overflow: hidden;
         width: 800;
-        height: 10000;
+        height: 18000;
       }
       .clear{
         clear:both;
@@ -19,7 +19,10 @@
     </style>
   </head>
   <body id="body">
-    <button type="button" onclick="scrape()">Scrape</button>
+    <h1><a href="rl-trades.com">RL-trades.com</a> Scraper</h1>
+    <p>This website is for Rocket League traders who instead of using some kind of price sheets such as <a href="rl.insider.gg">rl.insider.gg</a> want to just look at current offers and deduct pricing. This website allows them to see have and want for one item on one page rather then needing 2 per item.<p>
+    <p>The input box supports all rl-trades.com filters such as "" and -colors, and this website requires a monitor that is at least 1700 pixels wide which is about 1080p. I may in the future make a low resoulution version.<p>
+    <button type="button" onclick="scrape(1)">Scrape</button>
     <table>
       <tbody>
         <tr>
@@ -31,9 +34,27 @@
       </tbody>
     </table>
     <script>
-      function scrape() {
-        document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#w0='+ encodeURIComponent(document.getElementById("item").innerHTML) +'" scrolling="no" frameborder="0" width="800" height="10000" align="left" style="position: relative; top: -475px"></iframe> </div>';
-        document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#h0='+ encodeURIComponent(document.getElementById("item").innerHTML) +'" scrolling="no" frameborder="0" width="800" height="10000" align="right" style="position: relative; top: -475px"></iframe> </div>';
+      height = 18000
+      width = 800
+
+      if (window.location.href.search("/?item=") > 0) {
+        start = window.location.href.search("/?item=") + 5
+        item = ""
+        for (var i = start; i < window.location.href.length; i++) {
+          item = item + window.location.href[i]
+        }
+        document.getElementById("item").innerHTML = item
+        scrape(0)
+      }
+
+      function scrape(mode) { // mode = 0, no uri encoding mode = 1 uri encoding
+        if (mode == 1) {
+          document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#w0='+ encodeURIComponent(document.getElementById("item").innerHTML) +'" scrolling="no" frameborder="0" width="' + width + '" height="' + height + '" align="left" style="position: relative; top: -475px"></iframe> </div>';
+          document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#h0='+ encodeURIComponent(document.getElementById("item").innerHTML) +'" scrolling="no" frameborder="0" width="' + width + '" height="' + height + '" align="right" style="position: relative; top: -475px"></iframe> </div>';
+        } else if (mode == 0) {
+          document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#w0='+ document.getElementById("item").innerHTML +'" scrolling="no" frameborder="0" width="' + width + '" height="' + height + '" align="left" style="position: relative; top: -475px"></iframe> </div>';
+          document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#h0='+ document.getElementById("item").innerHTML +'" scrolling="no" frameborder="0" width="' + width + '" height="' + height + '" align="right" style="position: relative; top: -475px"></iframe> </div>';
+        }
       }
     </script>
   </body>
