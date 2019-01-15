@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        background-color: #ccc;
+      }
+      .box{
+        float:left;
+        margin-right:20px;
+        overflow: hidden;
+        width: 800;
+        height: 18000;
+      }
+
+      h1, p, a {
+        color: #ccc;
+      }
+      body {
+        background-color: #13181B;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><a href="rl-trades.com">RL-trades.com</a> Scraper</h1>
+    <p>This website is for Rocket League traders who instead of using some kind of price sheets such as <a href="rl.insider.gg">rl.insider.gg</a> want to just look at current offers and deduct pricing. This website allows them to see have and want for one item on one page rather then needing 2 per item.<p>
+    <p>The input box supports all rl-trades.com filters such as "" and -colors, and this website requires a monitor that is at least 1260 pixels wide which is essentially 720p<p>
+    <p>Oh, also rl-trades.com is sometimes a little glitchy in terms of actually loading. It will often give a 503 rather then loading or will give a cached version which does not have your search in it, just wait, the website should refresh if it gets a error after a few seconds and may load. If you want to see if a error is happening you will need to open the console.</p>
+    <p>This will only work if you are on theherobrine422.github.io and you will need to disable the popup blocker</p>
+    <button type="button" onclick="main()">Scrape</button>
+    <select id="res">
+      <option value='1080'>Default Resolution (1080p)</option>
+      <option value='720'>720p</option>
+    </select>
+    <table>
+      <tbody>
+        <tr id="columms">
+          <th>Item 1</th>
+        </tr>
+        <tr id="items">
+          <th><div contenteditable id="item1"></div></th>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      var items = 0
+      var res
+      function main() {
+        var res = document.getElementById("res"); // get res settings from select
+        var res = res.options[res.selectedIndex].value;
+
+        for (var i = 0; i < items; i++) {
+          window.open("https://theherobrine422.github.io/RLTradesScraper/1.1/iframe.html?item="+document.getElementById("item"+(i+1)).innerHTML+"?res="+res) // fix this to go to 1.1/iframe.html in the future
+        }
+      }
+
+      function newbox() {
+        if (document.getElementById("item"+(items+1)).innerHTML != "") {
+          items = items + 1
+          document.getElementById("columms").innerHTML = document.getElementById("columms").innerHTML + '<th>Item ' + (items + 1) + '</th>'
+          document.getElementById("items").innerHTML = document.getElementById("items").innerHTML + '<th><div contenteditable id="item' + (items + 1) + '"></div></th>'
+        }
+
+        setTimeout(function(){newbox()},50) // go to the next iteration of the loop in 50ms
+      }
+
+      newbox()
+    </script>
+  </body>
+</html>
