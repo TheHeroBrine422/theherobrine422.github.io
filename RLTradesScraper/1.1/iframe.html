@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>RL-Trades.com Scraper</title>
+    <title id="title">RL-Trades.com Scraper</title>
     <style>
       table, th, td {
         border: 1px solid black;
@@ -25,12 +25,7 @@
     <script type="text/javascript" src="https://www.shawnolson.net/scripts/public_smo_scripts.js"></script> <!-- this is awesome doc: changecss('.exampleA','color','black') changecss(theClass,element,value)-->
   </head>
   <body id="body">
-    <p id="err"></p>
-    <button type="button" onclick="scrape(1)">Scrape</button>
-    <select id="res">
-      <option value='{"height": 18000, "width": 800, "down": -475}'>Default Resolution (1080p)</option>
-      <option value='{"height": 18000, "width": 600, "down": -440}'>720p</option>
-    </select>
+    <h1><a href="rl-trades.com">RL-trades.com</a> Scraper</h1>
     <table>
       <tbody>
         <tr>
@@ -84,6 +79,8 @@
           document.getElementById("err").innerHTML = "Error: Refresh, don't try to scrape more then once in one tab. This may be possible in a later version."
           return
         }
+
+        document.getElementById("title").innerHTML = document.getElementById("title").innerHTML + " - " + decodeURIComponent(document.getElementById("item").innerHTML)
 
         run = true // err next time
 
