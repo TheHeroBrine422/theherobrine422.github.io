@@ -25,10 +25,6 @@
     <script type="text/javascript" src="https://www.shawnolson.net/scripts/public_smo_scripts.js"></script> <!-- this is awesome doc: changecss('.exampleA','color','black') changecss(theClass,element,value)-->
   </head>
   <body id="body">
-    <h1><a href="rl-trades.com">RL-trades.com</a> Scraper</h1>
-    <p>This website is for Rocket League traders who instead of using some kind of price sheets such as <a href="rl.insider.gg">rl.insider.gg</a> want to just look at current offers and deduct pricing. This website allows them to see have and want for one item on one page rather then needing 2 per item.<p>
-    <p>The input box supports all rl-trades.com filters such as "" and -colors, and this website requires a monitor that is at least 1260 pixels wide which is essentially 720p<p>
-    <p>Oh, also rl-trades.com is sometimes a little glitchy in terms of actually loading. It will often give a 503 rather then loading or will give a cached version which does not have your search in it, just wait, the website should refresh if it gets a error after a few seconds and may load. If you want to see if a error is happening you will need to open the console.</p>
     <p id="err"></p>
     <button type="button" onclick="scrape(1)">Scrape</button>
     <select id="res">
@@ -54,7 +50,6 @@
       var resSet = false
 
       if (window.location.href.search("item=") > 0) { // scrape from item name in url
-        console.log("in item")
         start = window.location.href.search("/?item=") + 5
         item = ""
         res = ""
@@ -70,12 +65,10 @@
 
       if (window.location.href.search("res=") > 0) {
         resSet = true
-        console.log("in res")
         start = window.location.href.search("/?res=") + 4
         for (var i = start; i < window.location.href.length; i++) {
           resolution = resolution + window.location.href[i]
         }
-        console.log(resolution)
         switch (resolution) {
           case "720":
             hwJSON = {"height": 18000, "width": 600, "down": -440}
