@@ -46,37 +46,67 @@
       </tbody>
     </table>
     <script>
-      var run = false
+      var run = false // global variables
       var height = 18000
       var width = 800
       var hwJSON
+      var resolution = ""
+      var resSet = false
 
-      if (window.location.href.search("/?item=") > 0) {
+      if (window.location.href.search("item=") > 0) { // scrape from item name in url
+        console.log("in item")
         start = window.location.href.search("/?item=") + 5
         item = ""
+        res = ""
         for (var i = start; i < window.location.href.length; i++) {
-          item = item + window.location.href[i]
+          if (window.location.href[i] == "?") {
+            break
+          } else {
+            item = item + window.location.href[i]
+          }
         }
         document.getElementById("item").innerHTML = item
-        scrape(0)
       }
 
-      function scrape(mode) { // mode = 0, no uri encoding mode = 1 uri encoding
-        if (run) {
+      if (window.location.href.search("res=") > 0) {
+        resSet = true
+        console.log("in res")
+        start = window.location.href.search("/?res=") + 4
+        for (var i = start; i < window.location.href.length; i++) {
+          resolution = resolution + window.location.href[i]
+        }
+        console.log(resolution)
+        switch (resolution) {
+          case "720":
+            hwJSON = {"height": 18000, "width": 600, "down": -440}
+            break;
+          default:
+          hwJSON = {"height": 18000, "width": 800, "down": -475}
+        }
+        setTimeout(function() {scrape(0, hwJSON)}, 500)
+      }
+
+      function scrape(mode, hwJSON) { // mode = 0, no uri encoding mode = 1 uri encoding
+        if (run) { // err
           document.getElementById("err").innerHTML = "Error: Refresh, don't try to scrape more then once in one tab. This may be possible in a later version."
           return
         }
-        run = true
-        var res = document.getElementById("res");
-        var hwJSON = res.options[res.selectedIndex].value;
-        hwJSON = JSON.parse(hwJSON)
-        height = hwJSON.height
-        width = hwJSON.width
-        down = hwJSON.down
-        changecss('.box','width',width)
+
+        run = true // err next time
+
+        if (!resSet) {
+          var res = document.getElementById("res"); // get res settings from select
+          var hwJSON = res.options[res.selectedIndex].value;
+          hwJSON = JSON.parse(hwJSON)
+        }
+          height = hwJSON.height
+          width = hwJSON.width
+          down = hwJSON.down
+
+        changecss('.box','width',width) // set the res settings
         changecss('.box','height',height)
 
-        if (mode == 1) {
+        if (mode == 1) { // make the iframes either with URI encoding (1) or without (0)
           document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#w0='+ encodeURIComponent(document.getElementById("item").innerHTML) +'" scrolling="no" frameborder="0" width="' + width + '" height="' + height + '" align="left" style="position: relative; top: ' + down + 'px"></iframe> </div>';
           document.getElementById("body").innerHTML = document.getElementById("body").innerHTML + '<div class="box"> <iframe id="iframe" src="https://www.rl-trades.com//#h0='+ encodeURIComponent(document.getElementById("item").innerHTML) +'" scrolling="no" frameborder="0" width="' + width + '" height="' + height + '" align="right" style="position: relative; top: ' + down + 'px"></iframe> </div>';
         } else if (mode == 0) {
