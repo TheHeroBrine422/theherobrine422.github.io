@@ -50,9 +50,13 @@
 
       function newbox() {
         if (document.getElementById("item"+(items+1)).innerHTML != "") {
+          var sel = document.selection;
           items = items + 1
+          var textRange = sel.createRange();
           document.getElementById("columms").innerHTML = document.getElementById("columms").innerHTML + '<th>Item ' + (items + 1) + '</th>'
           document.getElementById("items").innerHTML = document.getElementById("items").innerHTML + '<th><div contenteditable id="item' + (items + 1) + '"></div></th>'
+          textRange.collapse(false);
+          textRange.select();
         }
         setTimeout(function(){newbox()},50) // go to the next iteration of the loop in 50ms
       }
