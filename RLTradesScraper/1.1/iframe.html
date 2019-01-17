@@ -51,7 +51,7 @@
       var size // global variables
       var URLParams = GetURLParams()
 
-      document.getElementById("title").innerHTML = decodeURIComponent(URLParams.item) // change title
+      document.getElementById("title").innerHTML = "RLTS - " + decodeURIComponent(URLParams.item) // change title
       document.getElementById("item").innerHTML = decodeURIComponent(URLParams.item) // change title
 
       switch (URLParams.res) { // ready the res settings
