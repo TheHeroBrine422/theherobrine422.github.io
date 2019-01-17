@@ -38,12 +38,13 @@
     <script>
       var items = 0
       var res
+      
       function main() {
         var res = document.getElementById("res"); // get res settings from select
         var res = res.options[res.selectedIndex].value;
 
         for (var i = 0; i < items; i++) {
-          window.open("https://theherobrine422.github.io/RLTradesScraper/1.1/iframe.html?item="+document.getElementById("item"+(i+1)).innerHTML+"?res="+res) // fix this to go to 1.1/iframe.html in the future
+          window.open("https://theherobrine422.github.io/RLTradesScraper/1.1/iframe.html?item="+document.getElementById("item"+(i+1)).innerHTML+"&res="+res) // fix this to go to 1.1/iframe.html in the future
         }
       }
 
@@ -53,7 +54,6 @@
           document.getElementById("columms").innerHTML = document.getElementById("columms").innerHTML + '<th>Item ' + (items + 1) + '</th>'
           document.getElementById("items").innerHTML = document.getElementById("items").innerHTML + '<th><div contenteditable id="item' + (items + 1) + '"></div></th>'
         }
-
         setTimeout(function(){newbox()},50) // go to the next iteration of the loop in 50ms
       }
 
