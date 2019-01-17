@@ -39,6 +39,32 @@
       var items = 0
       var res
 
+      function saveRangePosition() { // credit http://jsfiddle.net/6jbwet9q/9/
+        var range=window.getSelection().getRangeAt(0);
+        var sC=range.startContainer,eC=range.endContainer;
+
+        A=[];while(sC!==bE){A.push(getNodeIndex(sC));sC=sC.parentNode}
+        B=[];while(eC!==bE){B.push(getNodeIndex(eC));eC=eC.parentNode}
+
+        window.rp={"sC":A,"sO":range.startOffset,"eC":B,"eO":range.endOffset};
+      }
+
+      function restoreRangePosition() {
+        bE.focus();
+        var sel=window.getSelection(),range=sel.getRangeAt(0);
+        var x,C,sC=bE,eC=bE;
+
+        C=rp.sC;x=C.length;while(x--)sC=sC.childNodes[C[x]];
+        C=rp.eC;x=C.length;while(x--)eC=eC.childNodes[C[x]];
+
+        range.setStart(sC,rp.sO);
+        range.setEnd(eC,rp.eO);
+        sel.removeAllRanges();
+        sel.addRange(range)
+      }
+
+      function getNodeIndex(n){var i=0;while(n=n.previousSibling)i++;return i}
+
       function main() {
         var res = document.getElementById("res"); // get res settings from select
         var res = res.options[res.selectedIndex].value;
@@ -50,13 +76,11 @@
 
       function newbox() {
         if (document.getElementById("item"+(items+1)).innerHTML != "") {
-          //var sel = document.selection;
           items = items + 1
-          //var textRange = sel.createRange();
+          saveRangePosition()
           document.getElementById("columms").innerHTML = document.getElementById("columms").innerHTML + '<th>Item ' + (items + 1) + '</th>'
           document.getElementById("items").innerHTML = document.getElementById("items").innerHTML + '<th><div contenteditable id="item' + (items + 1) + '"></div></th>'
-        //  textRange.collapse(false);
-          //textRange.select();
+          restoreRangePosition()
         }
         setTimeout(function(){newbox()},50) // go to the next iteration of the loop in 50ms
       }
