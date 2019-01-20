@@ -1,0 +1,95 @@
+<html>
+  <head>
+    <title>Phase 10 Online Score Card</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+    </style>
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <script src="main.js" id="main.js"></script>
+    <script>
+    function reloadJS() {
+      document.getElementById("main.js").remove()
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "main.js";
+      script.id = "main.js"
+      document.getElementsByTagName("head")[0].appendChild(script);
+      return false;
+    }
+    </script>
+  </head>
+  <body>
+    <h1>Phase 10 Online Score Card</h1>
+    <p>Select the number of players before you start, you cant change the number after you start it. If you reload the page, click the reload button and it will bring back your old data. If it does something weird, where the whole score card disappears or something like that when you hit reload, you have no saved data, refresh the page and well sorry but its gone.</p>
+    <p>To use the Dealer Teller, simply set the names of the players in where it says "Player 1" and "Player 2". Then in the dealer order box from top to bottom put the order of dealers at your table according to what the player numbers originally were.</p>
+    <table>
+      <tbody id="dealer">
+        <tr>
+          <th>Dealer Order</th>
+        </tr>
+        <tr id="1dealerrow">
+          <td><div id="1dealer" contenteditable></div></td>
+        </tr>
+        <tr id="2dealerrow">
+          <td><div id="2dealer" contenteditable></div></td>
+        </tr>
+      </tbody>
+    </table>
+    <p></p>
+    <button type="button" onclick="addPlayer()" id="addplayerbutton">Add Player</button>
+    <button type="button" onclick="removePlayer()" id="removeplayerbutton">Remove Player</button>
+    <button type="button" onclick="addCustomColumm()" id="addcustomcolummbutton">Add Custom Columm</button>
+    <button type="button" onclick="removeCustomColumm()" id="removecustomcolummbutton">Remove Custom Columm</button>
+    <button type="button" onclick="updateScore()">Update Scores (this will also set you to the next round)</button>
+    <button type="button" onclick="undoRound()">Undo Round (this will set you back a round)</button>
+    <button type="button" onclick="updateDealerOrder()">Update Dealer Order</button>
+    <button type="button" onclick="reload()">Reload</button>
+    <button type="button" onclick="reloadJS()">ReloadJS</button>
+    <p id="round">Current round: 1</p>
+    <p id="err"></p>
+    <table>
+      <tbody id="scorecard">
+        <tr id="playernames">
+          <th>Round</th>
+          <th>Dealer</th>
+          <th colspan="2" id="p1nameouter"><div contenteditable id="p1name">Player 1</div></th>
+          <th colspan="2" id="p2nameouter"><div contenteditable id="p2name">Player 2</div></th>
+        </tr>
+        <tr id="titles">
+          <td></td>
+          <td></td>
+          <td id="p1score">Score</td>
+          <td id="p1phase">Completed Phase</td>
+          <td id="p2score">Score</td>
+          <td id="p2phase">Completed Phase</td>
+        </tr>
+        <tr id="add">
+          <td>Add</td>
+          <td></td>
+          <td id="ScoreP1"><div contenteditable id="ScoreP1inside"></div></td>
+          <td id="ButtonP1"><button type="button" onclick="addPhase(0)">Add 1 Phase</button></td>
+          <td id="ScoreP2"><div contenteditable id="ScoreP2inside"></div></td>
+          <td id="ButtonP2"><button type="button" onclick="addPhase(1)">Add 1 Phase</button></td>
+        </tr>
+        <tr id="round1">
+          <td>1</td>
+          <td id="r1dealer"></td>
+          <td id="r1p1score"></td>
+          <td id="r1p1phase"></td>
+          <td id="r1p2score"></td>
+          <td id="r1p2phase"></td>
+        </tr>
+        <tr id="round2">
+          <td>2</td>
+          <td id="r2dealer"></td>
+          <td id="r2p1score"></td>
+          <td id="r2p1phase"></td>
+          <td id="r2p2score"></td>
+          <td id="r2p2phase"></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

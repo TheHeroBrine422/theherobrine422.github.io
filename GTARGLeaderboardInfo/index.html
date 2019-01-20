@@ -29,7 +29,11 @@
        data = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json"));
        document.getElementById("time").innerHTML = "Data was last updated: " + data.time + " CST";
        document.getElementById("participants").innerHTML = "Total participants: " + data.participants;
-       document.getElementById("key5participants").innerHTML = "Participants with 5 keys: " + data.key5participants;
+       document.getElementById("key5participants").innerHTML = "Participants with 9 keys (completed gate 2): " + data.key9participants;
+       document.getElementById("key5participants").innerHTML = "Participants with 8 keys or more: " + data.key8participants;
+       document.getElementById("key5participants").innerHTML = "Participants with 7 keys or more: " + data.key7participants;
+       document.getElementById("key5participants").innerHTML = "Participants with 6 keys or more: " + data.key6participants;
+       document.getElementById("key5participants").innerHTML = "Participants with 5 keys or more (completed gate 1): " + data.key5participants;
        document.getElementById("key4participants").innerHTML = "Participants with 4 keys or more: " + data.key4participants;
        document.getElementById("key3participants").innerHTML = "Participants with 3 keys or more: " + data.key3participants;
        document.getElementById("key2participants").innerHTML = "Participants with 2 keys or more: " + data.key2participants;
