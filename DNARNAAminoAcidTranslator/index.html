@@ -1,27 +1,18 @@
 <html>
   <head>
     <style>
-      table, th, td {
+      #DNA {
         border: 1px solid black;
+        width: 300px;
+        max-width: 30000000px;
       }
     </style>
   </head>
   <body>
     <button type="button" onclick="convert()" >Convert</button>
-    <table>
-      <tbody>
-        <tr>
-          <th>DNA</th>
-          <th>RNA</th>
-          <th>Amino Acids</th>
-        </tr>
-        <tr>
-          <td><div id="DNA" contenteditable></div></td>
-          <td id="RNA"></td>
-          <td id="AMA"></td>
-        </tr>
-      </tbody>
-    </table>
+    <div>DNA: <span id="DNA" contenteditable="true">DNA bases</span></div>
+    <p id="RNA">RNA:</p>
+    <p id="AMA">Amino Acids:</p>
     <script>
     function convert() {
       var DNA = document.getElementById("DNA").innerHTML // input
@@ -49,7 +40,7 @@
         }
       }
 
-      document.getElementById("RNA").innerHTML = RNA
+      document.getElementById("RNA").innerHTML = "RNA: " + RNA
 
       for (var i = 0; i < RNA.length; i=i+4) { // convert RNA to Amino Acids   translation   key: https://www.hmhco.com/content/science/sciencedimensions/na/gr9-12/ese_biology_9780544811966_/book_pages/OPS/img/cards/bi_cnlese811966_464a.jpg
         if (RNA[i] == "U") {
@@ -140,7 +131,7 @@
         }
       }
 
-      document.getElementById("AMA").innerHTML = AminoAcids
+      document.getElementById("AMA").innerHTML = "Amino Acids: " + AminoAcids
     }
 
     </script>
