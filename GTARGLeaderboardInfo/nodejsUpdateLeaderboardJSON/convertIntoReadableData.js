@@ -3,7 +3,6 @@ const fs = require('fs');
 var currentLeaderboardJSON = fs.readFileSync("leaderboard.json");
 var currentLeaderboardJSON = JSON.parse(currentLeaderboardJSON);
 
-var results = currentLeaderboardJSON.results // data to be inputed into json file
 var total = currentLeaderboardJSON.total
 
 var readableData = fs.readFileSync("readableData.json");
