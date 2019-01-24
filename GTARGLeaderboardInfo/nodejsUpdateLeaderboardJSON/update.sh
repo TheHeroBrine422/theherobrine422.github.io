@@ -33,11 +33,12 @@ node convertIntoReadableData.js # convert the data into a readable form for the 
 TIME=$(date +"%D %T") # update the data on the webserver (github)
 TIMEWRITE=$(cat readableData.json | underscore extend "{time: '$TIME'}")
 echo $TIMEWRITE > readableData.json
-echo $TIMEWRITE > $(date +"%s").json
+echo $TIMEWRITE > versions/$(date +"%s").json
 cat readableData.json
 
 echo pushing to github
 git add leaderboard.json
 git add readableData.json
+git add versions
 git commit -m "gtarg update data $TIME CST"
 git push

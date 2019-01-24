@@ -7,12 +7,7 @@ var currentLeaderboardJSON = JSON.parse(currentLeaderboardJSON);
 var results = currentLeaderboardJSON.results // data to be inputed into json file
 var total = currentLeaderboardJSON.total
 
-var x = ""
-process.argv.forEach(function (val, index, array) { // combine all command line arguments other then node and program path
-  if (index == "2") {
-    x = x + process.argv[index] + " "
-  }
-});
+var x = process.argv[2]
 
 Request("https://api.thetheoristgateway.com/args/265048a8-8521-4e9c-84c7-1de081efe0a4/leaderboard?page="+x, function(err, res, body) {
   if (err) throw err;
