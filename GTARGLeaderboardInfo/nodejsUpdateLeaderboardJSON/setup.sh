@@ -3,6 +3,7 @@ APPINSTALL=false # set this to true if you need to instal the npm packages and t
 
 if [[ $APPINSTALL ]]; then
   npm i request
+  npm install -g underscore-cli
 fi
 
 

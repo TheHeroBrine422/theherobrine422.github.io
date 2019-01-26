@@ -1,5 +1,7 @@
 <html>
-  <head></head>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+  </head>
   <body>
     <h1>Game Theory ARG Leaderboard API Info - NON-OFFICAL</h1>
     <p>The data on this site is based off the offical api so it is offical, but the the site its self was made by someone not apart of Game Theory. The data is only updated every 12-24 hours, but it is still pretty accurate for example, over about 12h (overnight) the total number only changed by about 500, and all the other numbers even less then that. If you want reasons for it only being updated every 12-24h, dm me on discord. If you want current data, the raw data is at the bottom of the page, or you can mention me on the offical Game Theory discord (Hero#1337) to get me to update it. I will not be adding the Beta Gates to this, so don't ask.</p>
@@ -21,7 +23,10 @@
     <p id="ranking5p">Ranking Needed to be in the top 5%:</p>
     <p id="ranking1p">Ranking Needed to be in the top 1%:</p>
     <p>The raw data for this site comes from <a href="https://api.thetheoristgateway.com/args/265048a8-8521-4e9c-84c7-1de081efe0a4/leaderboard?page=">this site, add page number to the end of this link.</a> If you want the data on this site in a format that is easier to use for a bot or simmilar, the data is in JSON format on: <a href="https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json">API Data</a></p>
+    <canvas id="chart"></canvas>
     <script>
+      var ctx = document.getElementById('chart').getContext('2d');
+
       function Get(yourUrl) { // credit https://stackoverflow.com/a/22790025/5038158
         var Httpreq = new XMLHttpRequest(); // a new request
         Httpreq.open("GET",yourUrl,false);
@@ -30,24 +35,165 @@
       }
 
       function update() {
-       data = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json"));
-       document.getElementById("time").innerHTML = "Data was last updated: " + data.time + " CST";
-       document.getElementById("participants").innerHTML = "Total participants: " + data.participants;
-       document.getElementById("key9participants").innerHTML = "Participants with 9 keys (completed gate 2): " + data.key9participants;
-       document.getElementById("key8participants").innerHTML = "Participants with 8 keys or more: " + data.key8participants;
-       document.getElementById("key7participants").innerHTML = "Participants with 7 keys or more: " + data.key7participants;
-       document.getElementById("key6participants").innerHTML = "Participants with 6 keys or more: " + data.key6participants;
-       document.getElementById("key5participants").innerHTML = "Participants with 5 keys or more (completed gate 1): " + data.key5participants;
-       document.getElementById("key4participants").innerHTML = "Participants with 4 keys or more: " + data.key4participants;
-       document.getElementById("key3participants").innerHTML = "Participants with 3 keys or more: " + data.key3participants;
-       document.getElementById("key2participants").innerHTML = "Participants with 2 keys or more: " + data.key2participants;
-       document.getElementById("key1participants").innerHTML = "Participants with 1 keys or more: " + data.key1participants;
-       document.getElementById("ranking50p").innerHTML = "Ranking Needed to be in the top 50%: " + data.ranking50p;
-       document.getElementById("ranking25p").innerHTML = "Ranking Needed to be in the top 25%: " + data.ranking25p;
-       document.getElementById("ranking10p").innerHTML = "Ranking Needed to be in the top 10%: " + data.ranking10p;
-       document.getElementById("ranking5p").innerHTML = "Ranking Needed to be in the top 5%: " + data.ranking5p;
-       document.getElementById("ranking1p").innerHTML = "Ranking Needed to be in the top 1%: " + data.ranking1p;
+       textData = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json")); // text
+       document.getElementById("time").innerHTML = "textData was last updated: " + textData.time + " CST";
+       document.getElementById("participants").innerHTML = "Total participants: " + textData.participants;
+       document.getElementById("key9participants").innerHTML = "Participants with 9 keys (completed gate 2): " + textData.key9participants;
+       document.getElementById("key8participants").innerHTML = "Participants with 8 keys or more: " + textData.key8participants;
+       document.getElementById("key7participants").innerHTML = "Participants with 7 keys or more: " + textData.key7participants;
+       document.getElementById("key6participants").innerHTML = "Participants with 6 keys or more: " + textData.key6participants;
+       document.getElementById("key5participants").innerHTML = "Participants with 5 keys or more (completed gate 1): " + textData.key5participants;
+       document.getElementById("key4participants").innerHTML = "Participants with 4 keys or more: " + textData.key4participants;
+       document.getElementById("key3participants").innerHTML = "Participants with 3 keys or more: " + textData.key3participants;
+       document.getElementById("key2participants").innerHTML = "Participants with 2 keys or more: " + textData.key2participants;
+       document.getElementById("key1participants").innerHTML = "Participants with 1 keys or more: " + textData.key1participants;
+       document.getElementById("ranking50p").innerHTML = "Ranking Needed to be in the top 50%: " + textData.ranking50p;
+       document.getElementById("ranking25p").innerHTML = "Ranking Needed to be in the top 25%: " + textData.ranking25p;
+       document.getElementById("ranking10p").innerHTML = "Ranking Needed to be in the top 10%: " + textData.ranking10p;
+       document.getElementById("ranking5p").innerHTML = "Ranking Needed to be in the top 5%: " + textData.ranking5p;
+       document.getElementById("ranking1p").innerHTML = "Ranking Needed to be in the top 1%: " + textData.ranking1p;
+
+       /*chartData = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/chartData.json")); // chart
+       chartData.sort(function(a, b) { // sort by time
+         return parseFloat(a.time) - parseFloat(b.time);
+       });*/
+
+       var config = {
+   			type: 'line',
+   			data: {
+   				labels: [],
+   				datasets: [{
+   					label: 'Participants',
+   					backgroundColor: window.chartColors.red,
+   					borderColor: window.chartColors.red,
+   					data: [0],
+   					fill: false,
+   				}, {
+   					label: 'Key 9 (Gate 2 Complete)',
+   					fill: false,
+   					backgroundColor: window.chartColors.blue,
+   					borderColor: window.chartColors.blue,
+   					data: [0],
+          }, {
+            label: 'Key 8',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Key 7',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Key 6',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Key 5 (Gate 1 Complete)',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Key 4',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Key 3',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Key 2',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Key 1',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+   				}, {
+            label: 'Ranking 50%',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Ranking 25%',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Ranking 10%',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+            label: 'Ranking 5%',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: [0],
+          }, {
+   					label: 'Ranking 1%',
+   					fill: false,
+   					backgroundColor: window.chartColors.blue,
+   					borderColor: window.chartColors.blue,
+   					data: [0],
+   				}]
+   			},
+   			options: {
+   				responsive: true,
+   				title: {
+   					display: true,
+   					text: 'Chart.js Line Chart'
+   				},
+   				tooltips: {
+   					mode: 'index',
+   					intersect: false,
+   				},
+   				hover: {
+   					mode: 'nearest',
+   					intersect: true
+   				},
+   				scales: {
+   					xAxes: [{
+   						display: true,
+   						scaleLabel: {
+   							display: true,
+   							labelString: 'Month'
+   						}
+   					}],
+   					yAxes: [{
+   						display: true,
+   						scaleLabel: {
+   							display: true,
+   							labelString: 'Value'
+   						}
+   					}]
+   				}
+   			}
+   		};
+
+       window.myLine = new Chart(ctx, config);
       }
     </script>
+    <script>
+		//var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+
+	</script>
   </body>
 </html>

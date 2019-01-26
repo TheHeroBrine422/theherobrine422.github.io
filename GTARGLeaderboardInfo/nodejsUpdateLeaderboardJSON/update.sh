@@ -36,8 +36,11 @@ echo $TIMEWRITE > readableData.json
 echo $TIMEWRITE > versions/$(date +"%s").json
 cat readableData.json
 
+node convertIntoChart.js
+
 echo pushing to github
 git add leaderboard.json
+git add chart.json
 git add readableData.json
 git add versions
 git commit -m "gtarg update data $TIME CST"
