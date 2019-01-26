@@ -26,6 +26,134 @@
     <canvas id="chart"></canvas>
     <script>
       var ctx = document.getElementById('chart').getContext('2d');
+      var config = {
+       type: 'line',
+       data: {
+         labels: [],
+         datasets: [{
+           label: 'Participants',
+           backgroundColor: "rgb(255, 99, 132)",
+           borderColor: "rgb(255, 99, 132)",
+           data: [0],
+           fill: false,
+         }, {
+           label: 'Key 9 (Gate 2 Complete)',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Key 8',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Key 7',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Key 6',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Key 5 (Gate 1 Complete)',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Key 4',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Key 3',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Key 2',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Key 1',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Ranking 50%',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Ranking 25%',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Ranking 10%',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Ranking 5%',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }, {
+           label: 'Ranking 1%',
+           fill: false,
+           backgroundColor: 'rgb(255, 159, 64)',
+           borderColor: 'rgb(255, 159, 64)',
+           data: [0],
+         }]
+       },
+       options: {
+         responsive: true,
+         title: {
+           display: true,
+           text: 'Graph'
+         },
+         tooltips: {
+           mode: 'index',
+           intersect: false,
+         },
+         hover: {
+           mode: 'nearest',
+           intersect: true
+         },
+         scales: {
+           xAxes: [{
+             display: true,
+             scaleLabel: {
+               display: true,
+               labelString: 'Time'
+             }
+           }],
+           yAxes: [{
+             display: false,
+             scaleLabel: {
+               display: true,
+               labelString: ''
+             }
+           }]
+         }
+       }
+     };
 
       function Get(yourUrl) { // credit https://stackoverflow.com/a/22790025/5038158
         var Httpreq = new XMLHttpRequest(); // a new request
@@ -53,10 +181,10 @@
        document.getElementById("ranking5p").innerHTML = "Ranking Needed to be in the top 5%: " + textData.ranking5p;
        document.getElementById("ranking1p").innerHTML = "Ranking Needed to be in the top 1%: " + textData.ranking1p;
 
-       /*chartData = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/chartData.json")); // chart
+       chartData = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/chartData.json")); // chart
        chartData.sort(function(a, b) { // sort by time
          return parseFloat(a.time) - parseFloat(b.time);
-       });*/
+       });
 
 /* colors
 
@@ -69,134 +197,11 @@ purple: 'rgb(153, 102, 255)',
 grey: 'rgb(201, 203, 207)'
 
 */
-       var config = {
-   			type: 'line',
-   			data: {
-   				labels: [],
-   				datasets: [{
-   					label: 'Participants',
-   					backgroundColor: "rgb(255, 99, 132)",
-   					borderColor: "rgb(255, 99, 132)",
-   					data: [0],
-   					fill: false,
-   				}, {
-   					label: 'Key 9 (Gate 2 Complete)',
-   					fill: false,
-   					backgroundColor: 'rgb(255, 159, 64)',
-   					borderColor: 'rgb(255, 159, 64)',
-   					data: [0],
-          }, {
-            label: 'Key 8',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Key 7',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Key 6',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Key 5 (Gate 1 Complete)',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Key 4',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Key 3',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Key 2',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Key 1',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-   				}, {
-            label: 'Ranking 50%',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Ranking 25%',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Ranking 10%',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-            label: 'Ranking 5%',
-            fill: false,
-            backgroundColor: 'rgb(255, 159, 64)',
-            borderColor: 'rgb(255, 159, 64)',
-            data: [0],
-          }, {
-   					label: 'Ranking 1%',
-   					fill: false,
-   					backgroundColor: 'rgb(255, 159, 64)',
-   					borderColor: 'rgb(255, 159, 64)',
-   					data: [0],
-   				}]
-   			},
-   			options: {
-   				responsive: true,
-   				title: {
-   					display: true,
-   					text: 'Chart.js Line Chart'
-   				},
-   				tooltips: {
-   					mode: 'index',
-   					intersect: false,
-   				},
-   				hover: {
-   					mode: 'nearest',
-   					intersect: true
-   				},
-   				scales: {
-   					xAxes: [{
-   						display: true,
-   						scaleLabel: {
-   							display: true,
-   							labelString: 'Month'
-   						}
-   					}],
-   					yAxes: [{
-   						display: true,
-   						scaleLabel: {
-   							display: true,
-   							labelString: 'Value'
-   						}
-   					}]
-   				}
-   			}
-   		};
+
+      for (var i = 0; i < chartData.data.length; i++) {
+  //      for
+  //      chartData.data[i]
+      }
 
        window.myLine = new Chart(ctx, config);
       }
