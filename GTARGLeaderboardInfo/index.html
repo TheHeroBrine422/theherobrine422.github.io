@@ -35,6 +35,7 @@
       blue: 'rgb(54, 162, 235)',
       purple: 'rgb(153, 102, 255)',
       grey: 'rgb(201, 203, 207)'
+      'rgb(0,0,0)'
 
       */
       var config = {
@@ -56,80 +57,80 @@
          }, {
            label: 'Key 8',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(255, 205, 86)',
+           borderColor: 'rgb(255, 205, 86)',
            data: [],
          }, {
            label: 'Key 7',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(75, 192, 192)',
+           borderColor: 'rgb(75, 192, 192)',
            data: [],
          }, {
            label: 'Key 6',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(54, 162, 235)',
+           borderColor: 'rgb(54, 162, 235)',
            data: [],
          }, {
            label: 'Key 5 (Gate 1 Complete)',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(153, 102, 255)',
+           borderColor: 'rgb(153, 102, 255)',
            data: [],
          }, {
            label: 'Key 4',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(201, 203, 207)',
+           borderColor: 'rgb(201, 203, 207)',
            data: [],
          }, {
            label: 'Key 3',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(0,0,0)',
+           borderColor: 'rgb(0,0,0)',
            data: [],
          }, {
            label: 'Key 2',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(255, 99, 132)',
+           borderColor: 'rgb(255, 99, 132)',
            data: [],
          }, {
            label: 'Key 1',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(255, 205, 86)',
+           borderColor: 'rgb(255, 205, 86)',
            data: [],
          }, {
            label: 'Ranking 50%',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(75, 192, 192)',
+           borderColor: 'rgb(75, 192, 192)',
            data: [],
          }, {
            label: 'Ranking 25%',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(54, 162, 235)',
+           borderColor: 'rgb(54, 162, 235)',
            data: [],
          }, {
            label: 'Ranking 10%',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(153, 102, 255)',
+           borderColor: 'rgb(153, 102, 255)',
            data: [],
          }, {
            label: 'Ranking 5%',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(201, 203, 207)',
+           borderColor: 'rgb(201, 203, 207)',
            data: [],
          }, {
            label: 'Ranking 1%',
            fill: false,
-           backgroundColor: 'rgb(255, 159, 64)',
-           borderColor: 'rgb(255, 159, 64)',
+           backgroundColor: 'rgb(0,0,0)',
+           borderColor: 'rgb(0,0,0)',
            data: [],
          }]
        },
@@ -137,7 +138,7 @@
          responsive: true,
          title: {
            display: true,
-           text: 'Graph'
+           text: 'Graph (This really isnt that great, but the old data is hard to get and getting better graph software is hard without paying money. Plus, the data isnt very accurate anyways cause sometimes days went by without me updating the data.) Every new line is a day'
          },
          tooltips: {
            mode: 'index',
@@ -214,6 +215,10 @@
         config.data.datasets[13].data[config.data.datasets[13].data.length] = chartData.data[i].ranking5p
         config.data.datasets[14].data[config.data.datasets[14].data.length] = chartData.data[i].ranking1p
       }
+      for (var i = 0; i < 50; i++) {
+        config.data.labels.push("")
+      }
+
 
        window.myLine = new Chart(ctx, config);
       }
