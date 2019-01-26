@@ -26,6 +26,17 @@
     <canvas id="chart"></canvas>
     <script>
       var ctx = document.getElementById('chart').getContext('2d');
+      /* colors
+
+      red: 'rgb(255, 99, 132)',
+      orange: 'rgb(255, 159, 64)',
+      yellow: 'rgb(255, 205, 86)',
+      green: 'rgb(75, 192, 192)',
+      blue: 'rgb(54, 162, 235)',
+      purple: 'rgb(153, 102, 255)',
+      grey: 'rgb(201, 203, 207)'
+
+      */
       var config = {
        type: 'line',
        data: {
@@ -145,9 +156,9 @@
              }
            }],
            yAxes: [{
-             display: false,
+             display: true,
              scaleLabel: {
-               display: true,
+               display: false,
                labelString: ''
              }
            }]
@@ -186,21 +197,23 @@
          return parseFloat(a.time) - parseFloat(b.time);
        });
 
-/* colors
-
-red: 'rgb(255, 99, 132)',
-orange: 'rgb(255, 159, 64)',
-yellow: 'rgb(255, 205, 86)',
-green: 'rgb(75, 192, 192)',
-blue: 'rgb(54, 162, 235)',
-purple: 'rgb(153, 102, 255)',
-grey: 'rgb(201, 203, 207)'
-
-*/
-
       for (var i = 0; i < chartData.data.length; i++) {
-  //      for
-  //      chartData.data[i]
+          config.data.datasets[0].data[config.data.datasets[0].data.length] = chartData.data[i].participants
+          config.data.datasets[1].data[config.data.datasets[1].data.length] = chartData.data[i].key9participants
+          config.data.datasets[2].data[config.data.datasets[2].data.length] = chartData.data[i].key8participants
+          config.data.datasets[3].data[config.data.datasets[3].data.length] = chartData.data[i].key7participants
+          config.data.datasets[4].data[config.data.datasets[4].data.length] = chartData.data[i].key6participants
+          config.data.datasets[5].data[config.data.datasets[5].data.length] = chartData.data[i].key5participants
+          config.data.datasets[6].data[config.data.datasets[6].data.length] = chartData.data[i].key4participants
+          config.data.datasets[7].data[config.data.datasets[7].data.length] = chartData.data[i].key3participants
+          config.data.datasets[8].data[config.data.datasets[8].data.length] = chartData.data[i].key2participants
+          config.data.datasets[9].data[config.data.datasets[9].data.length] = chartData.data[i].key1participants
+          config.data.datasets[10].data[config.data.datasets[10].data.length] = chartData.data[i].ranking50p
+          config.data.datasets[11].data[config.data.datasets[11].data.length] = chartData.data[i].ranking25p
+          config.data.datasets[12].data[config.data.datasets[12].data.length] = chartData.data[i].ranking10p
+          config.data.datasets[13].data[config.data.datasets[13].data.length] = chartData.data[i].ranking5p
+          config.data.datasets[14].data[config.data.datasets[14].data.length] = chartData.data[i].ranking1p
+        }
       }
 
        window.myLine = new Chart(ctx, config);
