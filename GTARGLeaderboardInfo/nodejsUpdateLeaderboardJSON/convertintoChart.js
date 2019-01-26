@@ -18,7 +18,7 @@ function main() {
   index = 0
   found = false
   for (var i = rawData.length-1; i > 0; i--) {
-    if ((new Date(rawData[i].time)).getTime() > time && !found) {
+    if ((new Date(rawData[i].time)).getTime() < time && !found) {
       index = i
       found = true
     }
@@ -31,6 +31,7 @@ function main() {
 
   time = time + 86400*1000 // 24h, resolution of graph
   }
+  console.log(chartData)
   fs.writeFileSync("chart.json", JSON.stringify(chartData)); // write result
 }
 

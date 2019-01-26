@@ -175,7 +175,7 @@
 
       function update() {
        textData = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json")); // text
-       document.getElementById("time").innerHTML = "textData was last updated: " + textData.time + " CST";
+       document.getElementById("time").innerHTML = "Data was last updated: " + textData.time + " CST";
        document.getElementById("participants").innerHTML = "Total participants: " + textData.participants;
        document.getElementById("key9participants").innerHTML = "Participants with 9 keys (completed gate 2): " + textData.key9participants;
        document.getElementById("key8participants").innerHTML = "Participants with 8 keys or more: " + textData.key8participants;
