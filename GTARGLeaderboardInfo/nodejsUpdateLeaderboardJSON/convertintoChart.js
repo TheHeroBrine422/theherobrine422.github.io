@@ -24,7 +24,7 @@ function main() {
     }
   }
 
-  chartData.data[chartData.data.length] = {"time": time, "participants": rawData[index].participants, "ranking50p": rawData[index].ranking50p, "ranking25p": rawData[index].ranking50p, "ranking10p": rawData[index].ranking25p, "ranking5p": rawData[index].ranking5p, "ranking1p": rawData[index].ranking1p}
+  chartData.data[chartData.data.length] = {"time": time, "participants": rawData[index].participants, "ranking50p": rawData[index].ranking50p, "ranking25p": rawData[index].ranking25p, "ranking10p": rawData[index].ranking10p, "ranking5p": rawData[index].ranking5p, "ranking1p": rawData[index].ranking1p}
   for (var i = 1; i < 10; i++) {
     chartData.data[chartData.data.length-1]["key"+i+"participants"] = rawData[index]["key"+i+"participants"]
   }
