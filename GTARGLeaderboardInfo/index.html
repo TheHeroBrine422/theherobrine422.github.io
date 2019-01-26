@@ -198,22 +198,21 @@
        });
 
       for (var i = 0; i < chartData.data.length; i++) {
-          config.data.datasets[0].data[config.data.datasets[0].data.length] = chartData.data[i].participants
-          config.data.datasets[1].data[config.data.datasets[1].data.length] = chartData.data[i].key9participants
-          config.data.datasets[2].data[config.data.datasets[2].data.length] = chartData.data[i].key8participants
-          config.data.datasets[3].data[config.data.datasets[3].data.length] = chartData.data[i].key7participants
-          config.data.datasets[4].data[config.data.datasets[4].data.length] = chartData.data[i].key6participants
-          config.data.datasets[5].data[config.data.datasets[5].data.length] = chartData.data[i].key5participants
-          config.data.datasets[6].data[config.data.datasets[6].data.length] = chartData.data[i].key4participants
-          config.data.datasets[7].data[config.data.datasets[7].data.length] = chartData.data[i].key3participants
-          config.data.datasets[8].data[config.data.datasets[8].data.length] = chartData.data[i].key2participants
-          config.data.datasets[9].data[config.data.datasets[9].data.length] = chartData.data[i].key1participants
-          config.data.datasets[10].data[config.data.datasets[10].data.length] = chartData.data[i].ranking50p
-          config.data.datasets[11].data[config.data.datasets[11].data.length] = chartData.data[i].ranking25p
-          config.data.datasets[12].data[config.data.datasets[12].data.length] = chartData.data[i].ranking10p
-          config.data.datasets[13].data[config.data.datasets[13].data.length] = chartData.data[i].ranking5p
-          config.data.datasets[14].data[config.data.datasets[14].data.length] = chartData.data[i].ranking1p
-        }
+        config.data.datasets[0].data[config.data.datasets[0].data.length] = chartData.data[i].participants
+        config.data.datasets[1].data[config.data.datasets[1].data.length] = chartData.data[i].key9participants
+        config.data.datasets[2].data[config.data.datasets[2].data.length] = chartData.data[i].key8participants
+        config.data.datasets[3].data[config.data.datasets[3].data.length] = chartData.data[i].key7participants
+        config.data.datasets[4].data[config.data.datasets[4].data.length] = chartData.data[i].key6participants
+        config.data.datasets[5].data[config.data.datasets[5].data.length] = chartData.data[i].key5participants
+        config.data.datasets[6].data[config.data.datasets[6].data.length] = chartData.data[i].key4participants
+        config.data.datasets[7].data[config.data.datasets[7].data.length] = chartData.data[i].key3participants
+        config.data.datasets[8].data[config.data.datasets[8].data.length] = chartData.data[i].key2participants
+        config.data.datasets[9].data[config.data.datasets[9].data.length] = chartData.data[i].key1participants
+        config.data.datasets[10].data[config.data.datasets[10].data.length] = chartData.data[i].ranking50p
+        config.data.datasets[11].data[config.data.datasets[11].data.length] = chartData.data[i].ranking25p
+        config.data.datasets[12].data[config.data.datasets[12].data.length] = chartData.data[i].ranking10p
+        config.data.datasets[13].data[config.data.datasets[13].data.length] = chartData.data[i].ranking5p
+        config.data.datasets[14].data[config.data.datasets[14].data.length] = chartData.data[i].ranking1p
       }
 
        window.myLine = new Chart(ctx, config);
