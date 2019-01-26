@@ -181,7 +181,7 @@
        document.getElementById("ranking5p").innerHTML = "Ranking Needed to be in the top 5%: " + textData.ranking5p;
        document.getElementById("ranking1p").innerHTML = "Ranking Needed to be in the top 1%: " + textData.ranking1p;
 
-       chartData = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/chartData.json")); // chart
+       chartData = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/chart.json")); // chart
        chartData.sort(function(a, b) { // sort by time
          return parseFloat(a.time) - parseFloat(b.time);
        });
