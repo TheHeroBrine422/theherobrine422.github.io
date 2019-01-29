@@ -11,16 +11,20 @@
   <body>
     <h1>DNA RNA Amino Acid Converter</h1>
     <p>Put in the DNA strand and it will convert it into the RNA and Amino Acids it will make.</p>
-    <button type="button" onclick="convert()" >Convert</button>
-    <div>DNA: <span id="DNA" contenteditable="true">DNA bases</span></div>
+    <button type="button" onclick="convert()">Convert</button>
+    <input type="checkbox" id="codon" name="mode" onclick="codon = !codon">Ignore Codon start/end sequences<br>
+    <div>DNA: <span id="DNA" contenteditable="true">Example TAC AGA CGG CAA CTC TGG GTG CTT TGT TCT CTT CTC AGT ATC</span></div>
     <p id="RNA">RNA:</p>
     <p id="AMA">Amino Acids:</p>
     <script>
+    var codon = false
+
     function convert() {
       var DNA = document.getElementById("DNA").innerHTML // input
       var RNA = "" // outputs
       var AminoAcids = "" // outputs
       var start = false
+
 
       for (var i = 0; i < DNA.length; i++) { // convert DNA to RNA   transcription   key: T=A A=U G=C C=G
         switch(DNA[i]) {
@@ -45,6 +49,8 @@
       document.getElementById("RNA").innerHTML = "RNA: " + RNA
 
       for (var i = 0; i < RNA.length; i=i+4) { // convert RNA to Amino Acids   translation   key: https://www.hmhco.com/content/science/sciencedimensions/na/gr9-12/ese_biology_9780544811966_/book_pages/OPS/img/cards/bi_cnlese811966_464a.jpg
+        if (codon) {start = true}
+
         if (RNA[i] == "U") {
 
           if (RNA[i+1] == "U") {
