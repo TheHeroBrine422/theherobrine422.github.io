@@ -1,13 +1,23 @@
 <html>
   <head>
     <title>Binary Clock</title>
+    <style>
+      #DNA {
+        border: 1px solid black;
+        width: 300px;
+        max-width: 30000000px;
+      }
+    </style>
   </head>
   <body>
     <h1>Binary Clock</h1>
+    <div>Refresh Rate: <span id="DNA" contenteditable="true">100</span> Smaller is faster and don't put anything but numbers in this.</div>
+    <button type="button" onclick="setRefreshRate()">Set Refresh Rate</button>
     <canvas id="canvas" width=1920></canvas>
     <script>
       var canvas = document.getElementById("canvas")
       var ctx = canvas.getContext("2d")
+      var refreshRate = 100
 
       canvas.height = window.innerHeight
       canvas.width = window.innerWidth
@@ -40,6 +50,10 @@
         ctx.lineWidth = 0
         ctx.StrokeStyle = '#003300'
         ctx.stroke()
+      }
+
+      function setRefreshRate() {
+        refreshRate = document.getElementById("DNA").innerText
       }
 
       function Draw(year, month, day, hour, minute, second, millsecond) { // year 11 digit, month 4 digit, day 5 digit, hour 5 digit, minute 6 digit, & second 6 digit
@@ -160,7 +174,7 @@
 
 
         Draw(year, month, day, hour, minute, seconds, millisecond) // draw
-        setTimeout(function(){update()},100)
+        setTimeout(function(){update()},refreshRate)
       }
 
       update()
