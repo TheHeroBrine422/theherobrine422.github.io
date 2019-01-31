@@ -138,6 +138,26 @@
         seconds = seconds.toString(2)
         millisecond = millisecond.toString(2)
 
+        for (var i = month.length; i < 4; i++) { // add the extra digits
+          month = "0" + month
+        }
+        for (var i = day.length; i < 5; i++) {
+          day = "0" + day
+        }
+        for (var i = hour.length; i < 5; i++) {
+          hour = "0" + hour
+        }
+        for (var i = minute.length; i < 6; i++) {
+          minute = "0" + minute
+        }
+        for (var i = seconds.length; i < 6; i++) {
+          seconds = "0" + seconds
+        }
+        for (var i = millisecond.length; i < 10; i++) {
+          millisecond = "0" + millisecond
+        }
+
+
         Draw(year, month, day, hour, minute, seconds, millisecond) // draw
         setTimeout(function(){update()},100)
       }
