@@ -2,7 +2,7 @@
   <head>
     <title>Binary Clock</title>
     <style>
-      #DNA {
+      #rr, #size {
         border: 1px solid black;
         width: 300px;
         max-width: 30000000px;
@@ -11,30 +11,27 @@
   </head>
   <body>
     <h1>Binary Clock</h1>
-    <div>Refresh Rate: <span id="DNA" contenteditable="true">100</span> Smaller is faster and don't put anything but numbers in this.</div>
-    <button type="button" onclick="setRefreshRate()">Set Refresh Rate</button>
-    <canvas id="canvas" width=1920></canvas>
+    <div>Refresh Rate: <span id="rr" contenteditable="true">100</span> Smaller is faster and don't put anything but numbers in this.</div>
+    <div>Size: <span id="size" contenteditable="true">15</span> Don't put anything but numbers in this. Warning: This doesn't work very well.</div>
+    <button type="button" onclick="setOptions()">Start</button>
+
+    <canvas id="canvas"></canvas>
     <script>
       var canvas = document.getElementById("canvas")
       var ctx = canvas.getContext("2d")
       var refreshRate = 100
+      var size = 15
 
       canvas.height = window.innerHeight
       canvas.width = window.innerWidth
 
-      var radius = 15 // option
-
-      ctx.font = "30px Arial";
-      yc = 30
-      var times = ["Year", "Month", "Day", "Hour", "Minute", "Second", "Millisecond"]
-      for (var i = 0; i < times.length; i++) {
-        ctx.fillText(times[i], 5, yc);
-        yc = yc + 70
+      Element.prototype.remove = function() { // credit https://stackoverflow.com/questions/3387427/remove-element-by-id#18120786
+        this.parentElement.removeChild(this);
       }
 
       function On(x, y) {
         ctx.beginPath()
-        ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
+        ctx.arc(x, y, size, 0, 2 * Math.PI, false)
         ctx.fillStyle = 'orange'
         ctx.fill()
         ctx.lineWidth = 0
@@ -44,7 +41,7 @@
 
       function Off(x, y) {
         ctx.beginPath()
-        ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
+        ctx.arc(x, y, size, 0, 2 * Math.PI, false)
         ctx.fillStyle = 'white'
         ctx.fill()
         ctx.lineWidth = 0
@@ -52,85 +49,100 @@
         ctx.stroke()
       }
 
-      function setRefreshRate() {
-        refreshRate = document.getElementById("DNA").innerText
+      function setOptions() {
+        refreshRate = document.getElementById("rr").innerText
+        size = Number(document.getElementById("size").innerText)
+        ctx.font = (size*2)+"px Arial"
+        yc = 30
+        var times = ["Year", "Month", "Day", "Hour", "Minute", "Second", "Millisecond"]
+        for (var i = 0; i < times.length; i++) {
+          ctx.fillText(times[i], 5, yc);
+          yc = yc + size*4+10
+        }
+        setTimeout(function(){update()},10)
+        document.getElementsByTagName("div")[0].remove()
+        document.getElementsByTagName("div")[0].remove()
+        document.getElementsByTagName("button")[0].remove()
       }
 
       function Draw(year, month, day, hour, minute, second, millsecond) { // year 11 digit, month 4 digit, day 5 digit, hour 5 digit, minute 6 digit, & second 6 digit
-
         var xc = 20
+        var yc = 40 + size
+
         for (var i = 0; i < year.length; i++) {
           if (year[i] == "1") {
-            On(xc, 55)
+            On(xc, yc)
           } else {
-            Off(xc, 55)
+            Off(xc, yc)
           }
-          xc = xc + 35
+          xc = xc + size*2+5
         }
+        yc = yc + size*4+10
 
 
         xc = 20
         for (var i = 0; i < month.length; i++) {
           if (month[i] == "1") {
-            On(xc, 125)
+            On(xc, yc)
           } else {
-            Off(xc, 125)
+            Off(xc, yc)
           }
-          xc = xc + 35
+          xc = xc + size*2+5
         }
-
+        yc = yc + size*4+10
 
         xc = 20
         for (var i = 0; i < day.length; i++) {
           if (day[i] == "1") {
-            On(xc, 195)
+            On(xc, yc)
           } else {
-            Off(xc, 195)
+            Off(xc, yc)
           }
-          xc = xc + 35
+          xc = xc + size*2+5
         }
-
+        yc = yc + size*4+10
 
         xc = 20
         for (var i = 0; i < hour.length; i++) {
           if (hour[i] == "1") {
-            On(xc, 265)
+            On(xc, yc)
           } else {
-            Off(xc, 265)
+            Off(xc, yc)
           }
-          xc = xc + 35
+          xc = xc + size*2+5
         }
-
+        yc = yc + size*4+10
 
         xc = 20
         for (var i = 0; i < minute.length; i++) {
           if (minute[i] == "1") {
-            On(xc, 335)
+            On(xc, yc)
           } else {
-            Off(xc, 335)
+            Off(xc, yc)
           }
-          xc = xc + 35
+          xc = xc + size*2+5
         }
-
+        yc = yc + size*4+10
 
         xc = 20
         for (var i = 0; i < second.length; i++) {
           if (second[i] == "1") {
-            On(xc, 405)
+            On(xc, yc)
           } else {
-            Off(xc, 405)
+            Off(xc, yc)
           }
-          xc = xc + 35
+          xc = xc + size*2+5
         }
+        yc = yc + size*4+10
 
         xc = 20
         for (var i = 0; i < millsecond.length; i++) {
           if (millsecond[i] == "1") {
-            On(xc, 475)
+            On(xc, yc)
           } else {
-            Off(xc, 475)
+            Off(xc, yc)
           }
-          xc = xc + 35
+          xc = xc + size*2+5
         }
       }
 
@@ -176,8 +188,6 @@
         Draw(year, month, day, hour, minute, seconds, millisecond) // draw
         setTimeout(function(){update()},refreshRate)
       }
-
-      update()
 
     </script>
   </body>
