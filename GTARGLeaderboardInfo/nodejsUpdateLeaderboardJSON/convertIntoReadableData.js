@@ -5,6 +5,11 @@ var currentLeaderboardJSON = JSON.parse(fs.readFileSync("leaderboard.json"))
 var readableData = JSON.parse(fs.readFileSync("readableData.json"))
 
 readableData.participants = currentLeaderboardJSON.total
+readableData.key14participants = currentLeaderboardJSON.results.indexOf(13)-1
+readableData.key13participants = currentLeaderboardJSON.results.indexOf(12)-1
+readableData.key12participants = currentLeaderboardJSON.results.indexOf(11)-1
+readableData.key11participants = currentLeaderboardJSON.results.indexOf(10)-1
+readableData.key10participants = currentLeaderboardJSON.results.indexOf(9)-1
 readableData.key9participants = currentLeaderboardJSON.results.indexOf(8)-1
 readableData.key8participants = currentLeaderboardJSON.results.indexOf(7)-1
 readableData.key7participants = currentLeaderboardJSON.results.indexOf(6)-1

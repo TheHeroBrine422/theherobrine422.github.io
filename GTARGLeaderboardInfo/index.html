@@ -8,7 +8,12 @@
     <p id="time">Data was last updated:</p>
     <button type="button" onclick="update()">Update Info</button>
     <p id="participants">Total participants:</p>
-    <p id="key9participants">Participants with 9 keys (completed gate 2):</p>
+    <p id="key14participants">Participants with 14 keys (completed gate 3):</p>
+    <p id="key13participants">Participants with 13 keys or more:</p>
+    <p id="key12participants">Participants with 12 keys or more:</p>
+    <p id="key11participants">Participants with 11 keys or more:</p>
+    <p id="key10participants">Participants with 10 keys or more:</p>
+    <p id="key9participants">Participants with 9 keys or more(completed gate 2):</p>
     <p id="key8participants">Participants with 8 keys or more:</p>
     <p id="key7participants">Participants with 7 keys or more:</p>
     <p id="key6participants">Participants with 6 keys or more:</p>
@@ -22,7 +27,7 @@
     <p id="ranking10p">Ranking Needed to be in the top 10%:</p>
     <p id="ranking5p">Ranking Needed to be in the top 5%:</p>
     <p id="ranking1p">Ranking Needed to be in the top 1%:</p>
-    <p>The raw data for this site comes from <a href="https://api.thetheoristgateway.com/args/265048a8-8521-4e9c-84c7-1de081efe0a4/leaderboard?page=">this site, add page number to the end of this link.</a> If you want the data on this site in a format that is easier to use for a bot or simmilar, the data is in JSON format on: <a href="https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json">API Data</a></p>
+    <p>The raw data for this site comes from <a href="https://api.thetheoristgateway.com/args/265048a8-8521-4e9c-84c7-1de081efe0a4/leaderboard?page=">this site, add page number to the end of this link.</a> If you want the data on this site in a format that is easier to use for a bot or simmilar, the data is in JSON format on: <a href="https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json">API Data</a> or the Chart Data: <href="https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/chart.json">Chart Data</a> </p>
     <canvas id="chart"></canvas>
     <script>
       var ctx = document.getElementById('chart').getContext('2d');
@@ -178,6 +183,11 @@
        textData = JSON.parse(Get("https://theherobrine422.github.io/GTARGLeaderboardInfo/nodejsUpdateLeaderboardJSON/readableData.json")); // text
        document.getElementById("time").innerHTML = "Data was last updated: " + textData.time + " CST";
        document.getElementById("participants").innerHTML = "Total participants: " + textData.participants;
+       document.getElementById("key14participants").innerHTML = "Participants with 14 keys (completed gate 3): " + textData.key9participants;
+       document.getElementById("key13participants").innerHTML = "Participants with 13 keys or more: " + textData.key8participants;
+       document.getElementById("key12participants").innerHTML = "Participants with 12 keys or more: " + textData.key7participants;
+       document.getElementById("key11participants").innerHTML = "Participants with 11 keys or more: " + textData.key6participants;
+       document.getElementById("key10participants").innerHTML = "Participants with 10 keys or more: " + textData.key5participants;
        document.getElementById("key9participants").innerHTML = "Participants with 9 keys (completed gate 2): " + textData.key9participants;
        document.getElementById("key8participants").innerHTML = "Participants with 8 keys or more: " + textData.key8participants;
        document.getElementById("key7participants").innerHTML = "Participants with 7 keys or more: " + textData.key7participants;
@@ -215,7 +225,7 @@
         config.data.datasets[13].data[config.data.datasets[13].data.length] = chartData.data[i].ranking5p
         config.data.datasets[14].data[config.data.datasets[14].data.length] = chartData.data[i].ranking1p
       }
-      for (var i = 0; i < 50; i++) {
+      for (var i = 0; i < chartData.data.length+5; i++) {
         config.data.labels.push("")
       }
 
