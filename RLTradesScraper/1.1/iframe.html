@@ -37,7 +37,7 @@
       </tbody>
     </table>
     <script>
-      function GetURLParams() { // from https://www.rapidtables.com/convert/number/base-converter.html
+      function GetURLParams() {
         var url = window.location.href;
         var regex = /[?&]([^=#]+)=([^&#]*)/g,
           params = {},
@@ -50,6 +50,7 @@
 
       var size // global variables
       var URLParams = GetURLParams()
+      console.log(URLParams)
 
       document.getElementById("title").innerHTML = "RLTS - " + decodeURIComponent(URLParams.item) // change title
       document.getElementById("item").innerHTML = decodeURIComponent(URLParams.item) // change title
