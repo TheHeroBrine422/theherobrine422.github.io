@@ -1,0 +1,77 @@
+<html>
+  <head>
+      <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+      td {
+        text-align: center;
+      }
+      </style>
+  </head>
+  <body>
+    <h1>PVR</h1>
+    <select style="text-align:left;" id="games">
+    </select>
+    <select style="text-align:left;" id="phases">
+    </select>
+    <button onclick="tableUpdate()">Refresh</button>
+    <hr>
+    <table id="ranking">
+
+    </table>
+    <script>
+    function Get(yourUrl) { // credit https://stackoverflow.com/a/22790025/5038158
+      var Httpreq = new XMLHttpRequest(); // a new request
+      Httpreq.open("GET",yourUrl,false);
+      Httpreq.send(null);
+      return Httpreq.responseText;
+    }
+
+    data = JSON.parse(Get("https://theherobrine422.github.io/PlayVsLeaderboard/dataPull/data.json")); // text
+
+    games = Object.getOwnPropertyNames(data)
+    phases = Object.getOwnPropertyNames(data[games[0]])
+
+    for (var i = 0; i < games.length; i++) {
+      document.getElementById("games").innerHTML = document.getElementById("games").innerHTML + "<option value='"+games[i]+"'>"+games[i]+"</option>"
+    }
+
+    for (var i = 0; i < phases.length; i++) {
+      document.getElementById("phases").innerHTML = document.getElementById("phases").innerHTML + "<option value='"+phases[i]+"'>"+phases[i]+"</option>"
+    }
+
+    function tableUpdate() {
+      var defaultTable = "<tr>"
+      defaultTable = defaultTable + "<th>Pos</th>"
+      defaultTable = defaultTable + "<th>Team</th>"
+      defaultTable = defaultTable + "<th>Win</th>"
+      defaultTable = defaultTable + "<th>Loss</th>"
+      defaultTable = defaultTable + "<th>Game Diff</th>"
+      defaultTable = defaultTable + "</tr>"
+      document.getElementById("ranking").innerHTML = defaultTable
+
+      var game = document.getElementById("games");
+      game = game.options[game.selectedIndex].value;
+
+      var phase = document.getElementById("phases");
+      phase = phase.options[phase.selectedIndex].value;
+
+      rankings = data[game][phase]
+
+      for (var i = 0; i < rankings.length; i++) {
+        row = "<tr>"
+        row = row + "<td>"+rankings[i][0]+"</td>"
+        row = row + "<td><div>Team: "+rankings[i][1]+"</div><div>School: "+rankings[i][2]+"</div></a></td>"
+        row = row + "<td>"+rankings[i][3]+"</td>"
+        row = row + "<td>"+rankings[i][4]+"</td>"
+        row = row + "<td>"+rankings[i][5]+"</td>"
+        row = row + "</tr>"
+        document.getElementById("ranking").innerHTML = document.getElementById("ranking").innerHTML + row
+      }
+    }
+
+    tableUpdate()
+    </script>
+  </body>
+</html>
