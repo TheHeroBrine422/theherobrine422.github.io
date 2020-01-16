@@ -1,0 +1,69 @@
+<html>
+  <head></head>
+  <body>
+    <h1>Pedigree Generator</h1>
+    <p id="info"> Number of Generations: 1   Number of People = 0<p>
+    <button id="1">Add Generation Button</button>
+    <canvas id="canvas"></canvas>
+    <script>
+      var canvas = document.getElementById("canvas")
+      var ctx = canvas.getContext("2d")
+
+      var people = []
+      var generation
+      var buttonstate = 1
+
+      canvas.height = window.innerHeight
+      canvas.width = window.innerWidth
+      ctx.font = "15px Arial";
+
+      Element.prototype.remove = function() { // credit https://stackoverflow.com/questions/3387427/remove-element-by-id#18120786
+        this.parentElement.removeChild(this);
+      }
+
+      function female(x, y, color) { // x/y from top left corner
+        ctx.beginPath()
+        ctx.arc(x+15, y+15, 15, 0, 2 * Math.PI, false)
+        ctx.fillStyle = color
+        ctx.fill()
+        ctx.lineWidth = 0
+        ctx.StrokeStyle = '#003300'
+        ctx.stroke()
+      }
+
+      function male(x, y, color) { // x/y from top left corner
+        ctx.beginPath()
+        ctx.rect(x, y, 30, 30);
+        ctx.fillStyle = color
+        ctx.fill()
+        ctx.lineWidth = 0
+        ctx.StrokeStyle = '#003300'
+        ctx.stroke()
+      }
+
+      function line(startx,starty,endx,endy) {
+        ctx.beginPath();
+        ctx.moveTo(startx,starty);
+        ctx.lineTo(endx, endy);
+        ctx.stroke();
+      }
+
+      function text(x,y,text,color) {
+        ctx.beginPath()
+        ctx.fillText(text, x, y);
+        ctx.fillStyle = color
+        ctx.fill()
+        ctx.lineWidth = 0
+        ctx.StrokeStyle = '#003300'
+        ctx.stroke()
+      }
+
+      line(20,20,80,20)
+      male(5,5,"black")
+      female(65,5,"white")
+      text(15,25,"1","white")
+      text(15,25,"2","black")
+
+    </script>
+  </body>
+<html>

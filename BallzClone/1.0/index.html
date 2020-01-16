@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+      body {
+        background-color: #202020;
+      }
+      canvas {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <script>
+      // global variables
+      var board = [] // JSON object for each index: {"type": 0, "hp": 0} Types: 0-Empty (HP=0) 1-Regular Block (HP=HP) 2-Ball Increaser (HP=1)
+      var refreshrate = 50 // time to wait before each refresh in ms
+      var canvas = document.getElementById("game");
+
+
+      for (var i = 0; i < 72; i++) {
+        board[i] = {"type": 0, "hp": 0}
+      }
+
+      function size() { // where the stuff for the auto resolution stuff should go
+        console.log("resize Width: "+window.innerWidth+" Height: "+window.innerHeight)
+        canvas.height = window.innerHeight
+        canvas.width = window.innerWidth
+      }
+
+      function drawBoard() {
+
+      }
+
+      function main() { // repeated many times a second
+        size()
+        drawBoard()
+
+        setTimeout(function(){main()},refreshrate)
+      }
+
+      function setup() { // ran once and then never ran again
+        size()
+        var ctx = canvas.getContext("2d");
+         // clear
+
+        main()
+      }
+
+      setup()
+    </script>
+  </body>
+</html>

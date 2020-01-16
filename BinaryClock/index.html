@@ -65,7 +65,7 @@
         document.getElementsByTagName("button")[0].remove()
       }
 
-      function Draw(year, month, day, hour, minute, second, millsecond) { // year 11 digit, month 4 digit, day 5 digit, hour 5 digit, minute 6 digit, & second 6 digit
+      function Draw(year, month, day, hour, minute, second, millsecond) { 
         var xc = 20
         var yc = 40 + size
 
@@ -183,7 +183,6 @@
         for (var i = millisecond.length; i < 10; i++) {
           millisecond = "0" + millisecond
         }
-
 
         Draw(year, month, day, hour, minute, seconds, millisecond) // draw
         setTimeout(function(){update()},refreshRate)
