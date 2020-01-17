@@ -11,7 +11,7 @@
   </head>
   <body>
     <h1>Esports Rankings Arkansas</h1>
-    <p>Currently Smite pre season, and regular season are not working due to playvs's website being broken.</p>
+    <p>Currently Smite pre-season, and regular season are not working due to playvs's website being broken.</p>
     <p>Playoffs WIP</p>
     <select style="text-align:left;" id="games">
     </select>
@@ -20,7 +20,6 @@
     <button onclick="tableUpdate()">Refresh</button>
     <hr>
     <table id="ranking">
-
     </table>
     <script>
     function Get(yourUrl) { // credit https://stackoverflow.com/a/22790025/5038158
@@ -57,7 +56,6 @@
         defaultTable = defaultTable + "<th>Team</th>"
         defaultTable = defaultTable + "<th>Win</th>"
         defaultTable = defaultTable + "<th>Loss</th>"
-        defaultTable = defaultTable + "<th>Game Diff</th>"
         defaultTable = defaultTable + "</tr>"
         document.getElementById("ranking").innerHTML = defaultTable
 
@@ -69,7 +67,6 @@
           row = row + "<td><div>Team: "+rankings[i][1]+"</div><div>School: "+rankings[i][2]+"</div></a></td>"
           row = row + "<td>"+rankings[i][3]+"</td>"
           row = row + "<td>"+rankings[i][4]+"</td>"
-          row = row + "<td>"+rankings[i][5]+"</td>"
           row = row + "</tr>"
           document.getElementById("ranking").innerHTML = document.getElementById("ranking").innerHTML + row
         }
