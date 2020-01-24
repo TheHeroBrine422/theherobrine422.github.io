@@ -29,7 +29,7 @@ async function pullData(page) {
   return resultsTemp;
 }
 
-async function pullDataPlayoffs(page) { // wip
+async function pullDataPlayoffs(page) {
   await delay(evalWait)
   resultsTemp = await page.evaluate(() => { // format: [[pos, teamName, schoolName, wins, loss, gameRecord], ...]
     columns = document.getElementsByClassName("slick-list")[0].children[0].children
@@ -92,18 +92,18 @@ Settings = JSON.parse(Settings);
 
   results = {
     "Rocket League": {
-      "Pre-Season": [],
       "Regular Season": [],
+      "Pre-Season": [],
       "Playoffs": []
     },
     "League of Legends": {
-      "Pre-Season": [],
       "Regular Season": [],
+      "Pre-Season": [],
       "Playoffs": []
     },
     "Smite": {
-      "Pre-Season": [],
       "Regular Season": [],
+      "Pre-Season": [],
       "Playoffs": []
     }
   }
@@ -118,40 +118,49 @@ Settings = JSON.parse(Settings);
   await page.goto('https://app.playvs.com/app/standings/regular-season', {timeout: 0});
   await delay(loadWait)
   results["League of Legends"]["Regular Season"] = await pullData(page);
-  await page.click('[id="standings-league-filter"]')
+  console.log("LoL")
+  await page.click('[id="league-filter"]')
   await delay(buttonWait)
-  //await page.click('[value="1"]')
-  //results["Smite"]["Regular Season"] = await pullData(page); // smite broken
-  //await page.click('[id="standings-league-filter"]')
+  await page.click('[value="1"]')
+  results["Smite"]["Regular Season"] = await pullData(page); // smite broken
+  console.log("smite")
+  await page.click('[id="league-filter"]')
   await delay(buttonWait)
-  await page.click('[value="2"]')
+  await page.click('[value="3"]')
   results["Rocket League"]["Regular Season"] = await pullData(page);
+  console.log("rocket league")
 
   console.log("preseason")
   await page.goto('https://app.playvs.com/app/standings/preseason', {timeout: 0});
   await delay(loadWait)
   results["League of Legends"]["Pre-Season"] = await pullData(page);
-  await page.click('[id="standings-league-filter"]')
+  console.log("LoL")
+  await page.click('[id="league-filter"]')
   await delay(buttonWait)
-  //await page.click('[value="1"]')
-  //results["Smite"]["Pre-Season"] = await pullData(page); // smite broke
-  //await page.click('[id="standings-league-filter"]')
+  await page.click('[value="1"]')
+  results["Smite"]["Pre-Season"] = await pullData(page); // smite broke
+  console.log("smite")
+  await page.click('[id="league-filter"]')
   await delay(buttonWait)
-  await page.click('[value="2"]')
+  await page.click('[value="3"]')
   results["Rocket League"]["Pre-Season"] = await pullData(page);
+  console.log("rocket league")
 
   console.log("playoffs")
   await page.goto('https://app.playvs.com/app/standings/playoffs', {timeout: 0});
   await delay(loadWait)
   results["League of Legends"]["Playoffs"] = await pullDataPlayoffs(page);
-  await page.click('[id="standings-league-filter"]')
+  console.log("LoL")
+  await page.click('[id="league-filter"]')
   await delay(buttonWait)
   await page.click('[value="1"]')
   results["Smite"]["Playoffs"] = await pullDataPlayoffs(page);
-  await page.click('[id="standings-league-filter"]')
+  console.log("smite")
+  await page.click('[id="league-filter"]')
   await delay(buttonWait)
-  await page.click('[value="2"]')
+  await page.click('[value="3"]')
   results["Rocket League"]["Playoffs"] = await pullDataPlayoffs(page);
+  console.log("rocket league")
   await delay(evalWait)
 
   fs.writeFileSync("data.json", JSON.stringify(results))
