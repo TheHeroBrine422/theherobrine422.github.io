@@ -49,7 +49,8 @@
       var phase = document.getElementById("phases");
       phase = phase.options[phase.selectedIndex].value;
       if (phase == "Playoffs") {
-        rankings = data[game][phase]
+        document.getElementById("ranking").innerHTML = "<tr>Playoffs currently not setup</tr>"
+        /*rankings = data[game][phase]
         var defaultTable = "<tr>"
         for (var i = 0; i < rankings.length; i++) {
           defaultTable = defaultTable + "<th><div>"+rankings[i][0]+"</div><div>"+rankings[i][1]+"</div></th>"
@@ -84,7 +85,7 @@
           }
           row = row + "</tr>"
           document.getElementById("ranking").innerHTML = document.getElementById("ranking").innerHTML + row
-        }
+        }*/
       } else {
         var defaultTable = "<tr>"
         defaultTable = defaultTable + "<th>Pos</th>"
