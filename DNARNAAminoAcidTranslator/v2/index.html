@@ -34,7 +34,8 @@
     <br>
     <h3>Changes from v1: </h3>
     <p>Allows multiple formats for outputs.</p>
-    <p>Automattically removes extra characters from RNA input allowing spaces or non spaces and extra comment text. Only capital TACG will be used inside of input.</p>
+    <p>Automattically removes extra characters from RNA input allowing spaces or non spaces and to disregard all extra text. Only capital TACG will be used inside of input.</p>
+    <p>Lots of code changes to allow it to be easier to add new features and to generaly edit.</p>
     <script>
     function convert() {
       var DNA = document.getElementById("DNA").innerHTML.replace(/[^TACG]/g, "").replace(/ +/, " ") // input
