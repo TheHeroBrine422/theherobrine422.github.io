@@ -17,9 +17,9 @@
     <div>
       <label for="size">Format: </label>
       <select name="size" id="size">
-        <option value='S'>One Letter Abbrivations</option>
-        <option value='M' selected>Three Letter Abbrivations</option>
-        <option value='L'>Full Amino Acid Names</option>
+        <option value='1'>One Letter Abbrivations</option>
+        <option value='2' selected>Three Letter Abbrivations</option>
+        <option value='3'>Full Amino Acid Names</option>
       </select>
     </div>
     <br>
@@ -37,16 +37,13 @@
     <p>Automattically removes extra characters from RNA input allowing spaces or non spaces and extra comment text. Only capital TACG will be used inside of input.</p>
     <script>
     function convert() {
-      var DNA = document.getElementById("DNA").innerHTML.replace(/[^TACG]/g, "").replace(/ +/, " ") // input
-      console.log(DNA)
+      var DNA = document.getElementById("DNA").innerHTML.replace(/[^TACG]/g, "").replace(/ +/, " ").match(/.{0,3}/g).join(' ') // input
       var RNA = "" // outputs
       var AminoAcids = "" // outputs
       var check = !document.getElementById("mode").checked
       var last = false;
       var active = false
-
-      DNA = DNA.match(/.{0,3}/g).join(' ');
-      console.log(DNA)
+      size = document.getElementById("size").value
 
       for (var i = 0; i < DNA.length; i++) { // convert DNA to RNA   transcription   key: T=A A=U G=C C=G
         switch(DNA[i]) {
@@ -68,21 +65,22 @@
         }
       }
 
-      document.getElementById("RNA").innerHTML = "RNA: " + RNA
-
       RNASplit = RNA.split(" ")
 
+      document.getElementById("RNA").innerHTML = "RNA: " + RNA
+
+
       for (var i = 0; i < RNASplit.length; i++) {
-        for (var j = 0; j < lookupTableRNA.length; j++) {
-          if (RNASplit[i] == lookupTableRNA[j][0]) {
-            if (lookupTableRNA[j][1] == "met") {
+        for (var j = 0; j < lookupTable.length; j++) {
+          if (RNASplit[i] == lookupTable[j][0]) {
+            if (lookupTable[j][2] == "met") {
               active = true;
-            } else if (lookupTableRNA[j][1] == "stp") {
+            } else if (lookupTable[j][2] == "stp") {
               active = false
               last = true
             }
             if (!check || (check && active) || last) {
-              AminoAcids += lookupTableRNA[j][1] + " "
+              AminoAcids += lookupTable[j][size] + " "
               last = false
             }
             break;
@@ -90,26 +88,8 @@
         }
       }
 
-      size = document.getElementById("size").value
-
-      if (size == "L" || size == "S") {
-        index = -1
-        if (size == "L") {index = 1;} else {index = 2;}
-        AASplit = AminoAcids.split(" ")
-        AminoAcids = ""
-        for (var i = 0; i < AASplit.length; i++) {
-          for (var j = 0; j < lookupTableAA.length; j++) {
-            if (AASplit[i] == lookupTableAA[j][0]) {
-              AminoAcids += lookupTableAA[j][index] + " "
-              break;
-            }
-          }
-        }
-      }
-
       document.getElementById("AMA").innerHTML = "Amino Acids: " + AminoAcids
     }
-
     </script>
   </body>
 </html>
