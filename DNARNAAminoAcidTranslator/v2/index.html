@@ -38,59 +38,61 @@
     <p>Lots of code changes to allow it to be easier to add new features and generally easier to edit.</p>
     <script>
     function convert() {
-      var DNA = document.getElementById("DNA").innerHTML.replace(/[^TACG]/g, "").replace(/ +/, " ").match(/.{0,3}/g).join(' ') // input. This massive amount of regex takes out all characters that arent TACG, and then adds spaces every 3 characters. Most of this was stolen from stackexchange although i changed some of it.
-      var RNA = "" // outputs
-      var AminoAcids = "" // outputs
-      var check = !document.getElementById("mode").checked
-      var last = false;
-      var active = false
-      var size = document.getElementById("size").value
+          let DNA = document.getElementById("DNA").innerHTML.replace(/[^TACG]/g, "").replace(/ +/, " ").match(/.{0,3}/g).join(' '); // input. This massive amount of regex takes out all characters that arent TACG, and then adds spaces every 3 characters. Most of this was stolen from stackexchange although i changed some of it.
+          let RNA = ""; // outputs
+          let AminoAcids = ""; // outputs
+          let check = !document.getElementById("mode").checked;
+          let last = false;
+          let active = false;
+          let size = document.getElementById("size").value;
 
-      for (var i = 0; i < DNA.length; i++) { // convert DNA to RNA   transcription   key: T=A A=U G=C C=G
-        switch(DNA[i]) {
-          case "T":
-            RNA = RNA + "A"
-            break
-          case "A":
-            RNA = RNA + "U"
-            break
-          case "G":
-            RNA = RNA + "C"
-            break
-          case "C":
-            RNA = RNA + "G"
-            break
-          default:
-            RNA = RNA + " "
-            break
-        }
-      }
-
-      RNASplit = RNA.split(" ")
-
-      document.getElementById("RNA").innerHTML = "RNA: " + RNA
-
-      // lookupTable comes from the lookup.js file.
-      for (var i = 0; i < RNASplit.length; i++) {
-        for (var j = 0; j < lookupTable.length; j++) {
-          if (RNASplit[i] == lookupTable[j][0]) {
-            if (lookupTable[j][2] == "met") {
-              active = true;
-            } else if (lookupTable[j][2] == "stp") {
-              active = false
-              last = true
+          for (var i = 0; i < DNA.length; i++) { // convert DNA to RNA   transcription   key: T=A A=U G=C C=G
+            switch(DNA[i]) {
+              case "T":
+                RNA = RNA + "A";
+                break;
+              case "A":
+                RNA = RNA + "U";
+                break;
+              case "G":
+                RNA = RNA + "C";
+                break;
+              case "C":
+                RNA = RNA + "G";
+                break;
+              default:
+                RNA = RNA + " ";
+                break;
             }
-            if (!check || (check && active) || last) {
-              AminoAcids += lookupTable[j][size] + " "
-              last = false
-            }
-            break;
           }
-        }
-      }
 
-      document.getElementById("AMA").innerHTML = "Amino Acids: " + AminoAcids
-    }
+          let RNASplit = RNA.split(" ");
+
+          document.getElementById("RNA").innerHTML = "RNA: " + RNA;
+
+          // lookupTable comes from the lookup.js file.
+          for (i = 0; i < RNASplit.length; i++) {
+            for (var j = 0; j < lookupTable.length; j++) {
+              if (RNASplit[i] == lookupTable[j][0]) {
+                if (lookupTable[j][2] == "met") {
+                  active = true;
+                } else if (lookupTable[j][2] == "stp") {
+                  active = false;
+                  last = true;
+                }
+                if (!check || (check && active) || last) {
+                  AminoAcids += lookupTable[j][size] + " ";
+                  last = false;
+                }
+                break;
+              }
+            }
+          }
+
+          document.getElementById("AMA").innerHTML = "Amino Acids: " + AminoAcids;
+        }
+
+
     </script>
   </body>
 </html>
