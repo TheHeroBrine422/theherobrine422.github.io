@@ -76,7 +76,7 @@
               if (RNASplit[i] == lookupTable[j][0]) {
                 if (lookupTable[j][2] == "met") {
                   active = true;
-                } else if (lookupTable[j][2] == "stp") {
+                } else if (active && lookupTable[j][2] == "stp") {
                   active = false;
                   last = true;
                 }
@@ -91,8 +91,6 @@
 
           document.getElementById("AMA").innerHTML = "Amino Acids: " + AminoAcids;
         }
-
-
     </script>
   </body>
 </html>
